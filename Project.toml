@@ -1,0 +1,13 @@
+name = "VPLTurtle"
+uuid = "7d6e2781-1c99-4c66-97ec-106669f3e96e"
+authors = ["Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors"]
+version = "0.0.1"
+
+[compat]
+julia = "1.9"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
