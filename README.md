@@ -1,4 +1,11 @@
 # VPLTurtle
 
-[![Build Status](https://github.com/AleMorales/VPLTurtle.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/AleMorales/VPLTurtle.jl/actions/workflows/CI.yml?query=branch%3Amaster)
-[![Coverage](https://codecov.io/gh/AleMorales/VPLTurtle.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/AleMorales/VPLTurtle.jl)
+[![CI](https://github.com/VirtualPlantLab/VPLTurtle/actions/workflows/main.yml/badge.svg)](https://github.com/VirtualPlantLab/VPLTurtle/actions/workflows/CI.yml)
+[![Coverage](https://codecov.io/gh/VirtualPlantLab/VPLTurtle/branch/master/graph/badge.svg?token=LCZHPERHUN)](https://codecov.io/gh/VirtualPlantLab/VPLTurtle)
+[![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
+[![ColPrac](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
+[![SciML Code Style](https://img.shields.io/static/v1?label=code%20style&message=SciML&color=9558b2&labelColor=389826)](https://github.com/SciML/SciMLStyle)
+
+This package is a component of the VPL ecosystem. It implements algorithms for procedural
+generation of plant geometry from graphs using turtle graphics. However, users should
+use the [VPL](https://github.com/VirtualPlantLab/VPL) package instead of this one.

@@ -3,11 +3,32 @@ uuid = "7d6e2781-1c99-4c66-97ec-106669f3e96e"
 authors = ["Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors"]
 version = "0.0.1"
 
+[deps]
+ColorTypes = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
+CoordinateTransformations = "150eb455-5306-5404-9cee-2592286d6298"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Rotations = "6038ab10-8711-5258-84ad-4b1120ba62dc"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+Unrolled = "9602ed7d-8fef-5bc8-8597-8f21381861e8"
+VPLGeom = "7eef3cc5-4580-4ff0-8f6f-933507db6664"
+VPLGraphAPI = "22098ff1-2c69-4025-acb4-169bf8942e20"
+VPLGraphs = "615ad455-9aac-4340-9247-71ef610f781a"
+
 [compat]
+ColorTypes = "0.11.4"
+CoordinateTransformations = "0.6.3"
+Rotations = "1.5.1"
+StaticArrays = "1.5.26"
+Unrolled = "0.1.5"
+VPLGeom = "0.0.1"
+VPLGraphAPI = "0.0.1"
+VPLGraphs = "0.0.1"
 julia = "1.9"
 
 [extras]
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test"]
+test = ["Test", "Aqua", "Pkg"]
