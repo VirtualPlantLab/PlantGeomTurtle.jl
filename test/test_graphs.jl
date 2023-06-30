@@ -26,7 +26,7 @@ function VPLTurtle.feed!(t::Turtle, n::NT.Plate, data)
 end
 axiom = NT.Plate(2.0, 2.0)
 graph = Graph(axiom = axiom)
-mesh = Scene(graph).mesh
+mesh = G.Scene(graph).mesh
 r = G.Rectangle(length = 2.0, width = 2.0)
 @test mesh == r
 
@@ -37,7 +37,7 @@ end
 COORDS = Turtle().coords
 axiom = NT.Point() + (RU(60.0) + NT.Plate(2.0, 2.0), NT.Point())
 graph = Graph(axiom = axiom)
-Scene(graph)
+G.Scene(graph)
 
 # Test turtle nodes - Rotations
 function VPLTurtle.feed!(t::Turtle, n::NT.Point, data)
@@ -49,7 +49,7 @@ function VPLTurtle.feed!(t::Turtle, n::NT.Point, data)
 end
 axiom = OR(Z(), Y(), X()) + RU(90.0) + RH(90.0) + RA(90.0) + F(1.0) + NT.Point()
 graph = Graph(axiom = axiom)
-Scene(graph);
+G.Scene(graph);
 
 # Test turtle nodes - Translation
 function VPLTurtle.feed!(t::Turtle, n::NT.Point, data)
@@ -60,7 +60,7 @@ function VPLTurtle.feed!(t::Turtle, n::NT.Point, data)
 end
 axiom = RU(90.0) + F(1.0) + T(O()) + NT.Point()
 graph = Graph(axiom = axiom)
-Scene(graph);
+G.Scene(graph);
 
 # Test turtle nodes - Gravitropism (one of the examples from test_gravitrpism.jl)
 function VPLTurtle.feed!(t::Turtle, n::NT.Point, data)
@@ -81,6 +81,6 @@ function VPLTurtle.feed!(t::Turtle, n::NT.Point, data)
 end
 axiom = RV(0.5) + NT.Point()
 graph = Graph(axiom = axiom)
-Scene(graph);
+G.Scene(graph);
 
 #end

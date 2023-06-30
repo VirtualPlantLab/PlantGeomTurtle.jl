@@ -1,6 +1,6 @@
 # VPLTurtle
 
-[![CI](https://github.com/VirtualPlantLab/VPLTurtle/actions/workflows/main.yml/badge.svg)](https://github.com/VirtualPlantLab/VPLTurtle/actions/workflows/CI.yml)
+[![CI](https://github.com/VirtualPlantLab/VPLTurtle/actions/workflows/CI.yml/badge.svg)](https://github.com/VirtualPlantLab/VPLTurtle/actions/workflows/CI.yml)
 [![Coverage](https://codecov.io/gh/VirtualPlantLab/VPLTurtle/branch/master/graph/badge.svg?token=LCZHPERHUN)](https://codecov.io/gh/VirtualPlantLab/VPLTurtle)
 [![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 [![ColPrac](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)

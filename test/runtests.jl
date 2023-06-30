@@ -6,7 +6,8 @@ import VPLTurtle
 
     # Aqua
     @testset "Aqua" begin
-        Aqua.test_all(VPLTurtle, ambiguities = false)
+        # Creating Scene from Graph results in type piracy
+        Aqua.test_all(VPLTurtle, ambiguities = false, piracy = false)
         Aqua.test_ambiguities([VPLTurtle])
     end
 

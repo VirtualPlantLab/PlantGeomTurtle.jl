@@ -9,8 +9,13 @@ import ColorTypes: Colorant
 import VPLGraphs: Node, Graph, GraphNode, root, children, data
 import VPLGeom:
     Mesh,
+    Scene,
+    Material,
     ntriangles,
     nvertices,
+    materials,
+    colors,
+    mesh,
     Triangle!,
     Rectangle!,
     Trapezoid!,
@@ -31,11 +36,7 @@ export Turtle,
     arm,
     pos,
     geoms,
-    materials,
-    colors,
-    mesh,
     Mesh!,
-    Scene,
     t!,
     T,
     or!,
@@ -70,7 +71,6 @@ export Turtle,
     HollowFrustum!,
     SolidFrustum!
 
-abstract type Material end
 
 """
     Vec(x, y, z)
