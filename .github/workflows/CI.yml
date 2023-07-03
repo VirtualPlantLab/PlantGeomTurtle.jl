@@ -29,9 +29,9 @@ jobs:
         with:
           version: ${{ matrix.version }}
           arch: ${{ matrix.arch }}
-      - run: julia --project -e 'using Pkg; Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphAPI.jl");
-                                            Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphs.jl");
-                                            Pkg.add(url="https://github.com/VirtualPlantLab/VPLGeom.jl")'
+      - run: julia -e 'using Pkg; Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphAPI.jl");
+                                  Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphs.jl");
+                                  Pkg.add(url="https://github.com/VirtualPlantLab/VPLGeom.jl")'
       - uses: julia-actions/cache@v1
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@latest
