@@ -32,7 +32,7 @@ jobs:
       - run: julia -e 'using Pkg; Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphAPI.jl");
                                   Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphs.jl");
                                   Pkg.add(url="https://github.com/VirtualPlantLab/VPLGeom.jl")'
-      - run: julia --project -e 'import VPLTurtle'
+      - run: julia --project -e 'using Pkg; Pkg.instantiate(); import VPLTurtle'
       - uses: julia-actions/cache@v1
       - uses: julia-actions/julia-runtest@latest
       - uses: julia-actions/julia-processcoverage@v1
