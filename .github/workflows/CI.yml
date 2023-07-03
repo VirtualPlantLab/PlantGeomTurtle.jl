@@ -33,6 +33,9 @@ jobs:
           arch: ${{ matrix.arch }}
       - uses: julia-actions/cache@v1
       - uses: julia-actions/julia-buildpkg@v1
+      - run: julia --project -e 'using Pkg; Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphAPI.jl");
+                                            Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphs.jl");
+                                            Pkg.add(url="https://github.com/VirtualPlantLab/VPLGeom.jl")'
       - uses: julia-actions/julia-runtest@v1
       - uses: julia-actions/julia-processcoverage@v1
       - uses: codecov/codecov-action@v3
