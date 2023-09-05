@@ -29,8 +29,7 @@ jobs:
         with:
           version: ${{ matrix.version }}
           arch: ${{ matrix.arch }}
-      - run: julia -e 'using Pkg; Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphAPI.jl");
-                                  Pkg.add(url="https://github.com/VirtualPlantLab/PlantGraphs.jl");
+      - run: julia -e 'using Pkg; Pkg.add(url="https://github.com/VirtualPlantLab/PlantGraphs.jl");
                                   Pkg.add(url="https://github.com/VirtualPlantLab/PlantGeomPrimitives.jl")'
       - run: julia --project -e 'using Pkg; Pkg.instantiate(); import PlantGeomTurtle'
       - uses: julia-actions/cache@v1
