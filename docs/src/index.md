@@ -1,14 +1,14 @@
 ```@meta
-CurrentModule = PlantTurtleGeom
+CurrentModule = PlantGeomTurtle
 ```
 
-# PlantTurtleGeom
+# PlantGeomTurtle
 
-Documentation for [PlantTurtleGeom](https://github.com/AleMorales/PlantTurtleGeom.jl).
+Documentation for [PlantGeomTurtle](https://github.com/AleMorales/PlantGeomTurtle.jl).
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [PlantTurtleGeom]
+Modules = [PlantGeomTurtle]
 ```

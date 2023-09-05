@@ -1,4 +1,4 @@
-import PlantTurtleGeom as VT
+import PlantGeomTurtle as VT
 import PlantGeomPrimitives as VG
 using Test
 

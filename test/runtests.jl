@@ -1,14 +1,14 @@
 using Test
 import Aqua
-import PlantTurtleGeom
+import PlantGeomTurtle
 
-@testset "PlantTurtleGeom.jl" begin
+@testset "PlantGeomTurtle.jl" begin
 
     # Aqua
     @testset "Aqua" begin
         # Creating Scene from Graph results in type piracy
-        Aqua.test_all(PlantTurtleGeom, ambiguities = false, piracy = false)
-        Aqua.test_ambiguities([PlantTurtleGeom])
+        Aqua.test_all(PlantGeomTurtle, ambiguities = false, piracy = false)
+        Aqua.test_ambiguities([PlantGeomTurtle])
     end
 
     # Turtle geometry

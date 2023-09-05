@@ -1,13 +1,13 @@
-using PlantTurtleGeom
+using PlantGeomTurtle
 using Documenter
 
-DocMeta.setdocmeta!(PlantTurtleGeom, :DocTestSetup, :(using PlantTurtleGeom); recursive = true)
+DocMeta.setdocmeta!(PlantGeomTurtle, :DocTestSetup, :(using PlantGeomTurtle); recursive = true)
 
 makedocs(;
-    modules = [PlantTurtleGeom],
+    modules = [PlantGeomTurtle],
     authors = "Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors",
-    repo = "https://github.com/AleMorales/PlantTurtleGeom.jl/blob/{commit}{path}#{line}",
-    sitename = "PlantTurtleGeom.jl",
+    repo = "https://github.com/AleMorales/PlantGeomTurtle.jl/blob/{commit}{path}#{line}",
+    sitename = "PlantGeomTurtle.jl",
     format = Documenter.HTML(;
         prettyurls = get(ENV, "CI", "false") == "true",
         edit_link = "master",

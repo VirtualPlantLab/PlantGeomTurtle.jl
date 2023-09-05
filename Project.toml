@@ -1,4 +1,4 @@
-name = "PlantTurtleGeom"
+name = "PlantGeomTurtle"
 uuid = "7d6e2781-1c99-4c66-97ec-106669f3e96e"
 authors = ["Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors"]
 version = "0.0.1"

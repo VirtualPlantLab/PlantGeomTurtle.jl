@@ -1,4 +1,4 @@
-module PlantTurtleGeom
+module PlantGeomTurtle
 
 import StaticArrays: SVector, SMatrix
 import LinearAlgebra: ×, norm, normalize, ⋅

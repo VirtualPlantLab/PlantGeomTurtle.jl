@@ -1,4 +1,4 @@
-using PlantTurtleGeom
+using PlantGeomTurtle
 using PlantGraphs
 import PlantGeomPrimitives as G
 using Test
@@ -21,7 +21,7 @@ import .NodeTypes as NT
 
 
 # Test basic feed! algorithm
-function PlantTurtleGeom.feed!(t::Turtle, n::NT.Plate, data)
+function PlantGeomTurtle.feed!(t::Turtle, n::NT.Plate, data)
     Rectangle!(t; length = n.length, width = n.width, move = true)
 end
 axiom = NT.Plate(2.0, 2.0)
@@ -31,7 +31,7 @@ r = G.Rectangle(length = 2.0, width = 2.0)
 @test mesh == r
 
 # Test resetting the turtle prior to a branch
-function PlantTurtleGeom.feed!(t::Turtle, n::NT.Point, data)
+function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
     @test t.coords == COORDS
 end
 COORDS = Turtle().coords
@@ -40,7 +40,7 @@ graph = Graph(axiom = axiom)
 G.Scene(graph)
 
 # Test turtle nodes - Rotations
-function PlantTurtleGeom.feed!(t::Turtle, n::NT.Point, data)
+function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
     println(t.coords)
     @test pos(t) ≈ .-Z()
     @test head(t) ≈ .-Z()
@@ -52,7 +52,7 @@ graph = Graph(axiom = axiom)
 G.Scene(graph);
 
 # Test turtle nodes - Translation
-function PlantTurtleGeom.feed!(t::Turtle, n::NT.Point, data)
+function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
     @test pos(t) ≈ O()
     @test head(t) ≈ Y()
     @test up(t) ≈ X()
@@ -63,7 +63,7 @@ graph = Graph(axiom = axiom)
 G.Scene(graph);
 
 # Test turtle nodes - Gravitropism (one of the examples from test_gravitrpism.jl)
-function PlantTurtleGeom.feed!(t::Turtle, n::NT.Point, data)
+function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
     ra!(t, 45.0)
     tb = head(t)
     rv!(t, 0.5)
