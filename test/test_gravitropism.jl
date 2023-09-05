@@ -1,10 +1,10 @@
-using VPLTurtle
+using PlantTurtleGeom
 using Test
 using LinearAlgebra
 
 let
     # RA of 45° (upward gravitropism)
-    t = VPLTurtle.Turtle(Float64)
+    t = PlantTurtleGeom.Turtle(Float64)
     ra!(t, 45.0)
     tb = head(t)
     rv!(t, 0.5)
@@ -21,7 +21,7 @@ let
     @test abs(up(t) ⋅ arm(t)) < eps(Float64)
 
     # RA of 45° (downward gravitropism)
-    t = VPLTurtle.Turtle(Float64)
+    t = PlantTurtleGeom.Turtle(Float64)
     ra!(t, 45.0)
     tb = head(t)
     rv!(t, -0.5)

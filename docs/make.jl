@@ -1,13 +1,13 @@
-using VPLTurtle
+using PlantTurtleGeom
 using Documenter
 
-DocMeta.setdocmeta!(VPLTurtle, :DocTestSetup, :(using VPLTurtle); recursive = true)
+DocMeta.setdocmeta!(PlantTurtleGeom, :DocTestSetup, :(using PlantTurtleGeom); recursive = true)
 
 makedocs(;
-    modules = [VPLTurtle],
+    modules = [PlantTurtleGeom],
     authors = "Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors",
-    repo = "https://github.com/AleMorales/VPLTurtle.jl/blob/{commit}{path}#{line}",
-    sitename = "VPLTurtle.jl",
+    repo = "https://github.com/AleMorales/PlantTurtleGeom.jl/blob/{commit}{path}#{line}",
+    sitename = "PlantTurtleGeom.jl",
     format = Documenter.HTML(;
         prettyurls = get(ENV, "CI", "false") == "true",
         edit_link = "master",

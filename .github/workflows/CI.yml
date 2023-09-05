@@ -30,12 +30,11 @@ jobs:
           version: ${{ matrix.version }}
           arch: ${{ matrix.arch }}
       - run: julia -e 'using Pkg; Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphAPI.jl");
-                                  Pkg.add(url="https://github.com/VirtualPlantLab/VPLGraphs.jl");
-                                  Pkg.add(url="https://github.com/VirtualPlantLab/VPLGeom.jl")'
-      - run: julia --project -e 'using Pkg; Pkg.instantiate(); import VPLTurtle'
+                                  Pkg.add(url="https://github.com/VirtualPlantLab/PlantGraphs.jl");
+                                  Pkg.add(url="https://github.com/VirtualPlantLab/PlantGeomPrimitives.jl")'
+      - run: julia --project -e 'using Pkg; Pkg.instantiate(); import PlantTurtleGeom'
       - uses: julia-actions/cache@v1
       - uses: julia-actions/julia-runtest@latest
-      - uses: julia-actions/julia-processcoverage@v1
-      - uses: codecov/codecov-action@v3
-        with:
-          files: lcov.info
+      - uses: julia-actions/julia-uploadcodecov@latest
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

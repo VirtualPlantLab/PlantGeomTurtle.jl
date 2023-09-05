@@ -1,5 +1,5 @@
-import VPLTurtle as VT
-import VPLGeom as VG
+import PlantTurtleGeom as VT
+import PlantGeomPrimitives as VG
 using Test
 import CoordinateTransformations as CT
 using LinearAlgebra

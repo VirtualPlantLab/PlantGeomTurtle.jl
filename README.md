@@ -1,7 +1,7 @@
-# VPLTurtle
+# PlantTurtleGeom
 
-[![CI](https://github.com/VirtualPlantLab/VPLTurtle.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/VirtualPlantLab/VPLTurtle.jl/actions/workflows/CI.yml)
-[![Coverage](https://codecov.io/gh/VirtualPlantLab/VPLTurtle.jl/branch/master/graph/badge.svg?token=LCZHPERHUN)](https://codecov.io/gh/VirtualPlantLab/VPLTurtle.jl)
+[![CI](https://github.com/VirtualPlantLab/PlantTurtleGeom.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/VirtualPlantLab/PlantTurtleGeom.jl/actions/workflows/CI.yml)
+[![Coverage](https://codecov.io/gh/VirtualPlantLab/PlantTurtleGeom.jl/branch/master/graph/badge.svg?token=LCZHPERHUN)](https://codecov.io/gh/VirtualPlantLab/PlantTurtleGeom.jl)
 [![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 [![ColPrac](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
 [![SciML Code Style](https://img.shields.io/static/v1?label=code%20style&message=SciML&color=9558b2&labelColor=389826)](https://github.com/SciML/SciMLStyle)

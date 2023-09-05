@@ -1,4 +1,4 @@
-module VPLTurtle
+module PlantTurtleGeom
 
 import StaticArrays: SVector, SMatrix
 import LinearAlgebra: ×, norm, normalize, ⋅
@@ -6,8 +6,8 @@ import CoordinateTransformations: SDiagonal, LinearMap, Translation
 import Rotations: RotX, RotY, RotZ
 import Unrolled: @unroll
 import ColorTypes: Colorant
-import VPLGraphs: Node, Graph, GraphNode, root, children, data
-import VPLGeom:
+import PlantGraphs: Node, Graph, GraphNode, getroot, children, data
+import PlantGeomPrimitives:
     Mesh,
     Scene,
     Material,

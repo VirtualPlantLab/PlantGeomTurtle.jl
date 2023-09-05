@@ -1,14 +1,14 @@
 ```@meta
-CurrentModule = VPLTurtle
+CurrentModule = PlantTurtleGeom
 ```
 
-# VPLTurtle
+# PlantTurtleGeom
 
-Documentation for [VPLTurtle](https://github.com/AleMorales/VPLTurtle.jl).
+Documentation for [PlantTurtleGeom](https://github.com/AleMorales/PlantTurtleGeom.jl).
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [VPLTurtle]
+Modules = [PlantTurtleGeom]
 ```
