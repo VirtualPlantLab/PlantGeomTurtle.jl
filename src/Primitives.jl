@@ -34,6 +34,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> Ellipse!(turtle; length = 1.0, width = 0.5, n = 40);
+```
 """
 function Ellipse!(
     turtle::Turtle{FT,UT};
@@ -44,8 +51,6 @@ function Ellipse!(
     material = nothing,
     color = nothing,
 ) where {FT,UT}
-    #push!(nvertices(turtle), n + 1)
-    #push!(ntriangles(turtle), n)
     # Generate the ellipse and add it to the turtle
     trans = transform(turtle, (one(FT), width / FT(2), length / FT(2)))
     Ellipse!(geoms(turtle), trans; n = n)
@@ -85,6 +90,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> Triangle!(turtle; length = 2.0, width = 1.0);
+```
 """
 function Triangle!(
     turtle::Turtle{FT,UT};
@@ -94,8 +106,6 @@ function Triangle!(
     material = nothing,
     color = nothing,
 ) where {FT,UT}
-    #push!(nvertices(turtle), 3)
-    #push!(ntriangles(turtle), 1)
     trans = transform(turtle, (one(FT), width / FT(2), length))
     Triangle!(geoms(turtle), trans)
     move && f!(turtle, length)
@@ -134,6 +144,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> Rectangle!(turtle; length = 1.0, width = 0.5);
+```
 """
 function Rectangle!(
     turtle::Turtle{FT,UT};
@@ -143,8 +160,6 @@ function Rectangle!(
     material = nothing,
     color = nothing,
 ) where {FT,UT}
-    #push!(nvertices(turtle), 4)
-    #push!(ntriangles(turtle), 2)
     trans = transform(turtle, (one(FT), width / FT(2), length))
     Rectangle!(geoms(turtle), trans)
     move && f!(turtle, length)
@@ -185,6 +200,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> Trapezoid!(turtle; length = 1.0, width = 1.0, ratio = 0.5);
+```
 """
 function Trapezoid!(
     turtle::Turtle{FT,UT};
@@ -195,8 +217,6 @@ function Trapezoid!(
     material = nothing,
     color = nothing,
 ) where {FT,UT}
-    #push!(nvertices(turtle), 4)
-    #push!(ntriangles(turtle), 2)
     trans = transform(turtle, (one(FT), width / FT(2), length))
     Trapezoid!(geoms(turtle), trans, ratio)
     move && f!(turtle, length)
@@ -237,6 +257,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> Trapezoid!(turtle; length = 1.0, width = 1.0, ratio = 0.5);
+```
 """
 function HollowCone!(
     turtle::Turtle{FT,UT};
@@ -248,8 +275,6 @@ function HollowCone!(
     material = nothing,
     color = nothing,
 ) where {FT,UT}
-    #push!(nvertices(turtle), n + 1)
-    #push!(ntriangles(turtle), n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     HollowCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
@@ -289,6 +314,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> HollowCube!(turtle; length = 1.0, width = 1.0, height = 2.0);
+```
 """
 function HollowCube!(
     turtle::Turtle{FT,UT};
@@ -299,8 +331,6 @@ function HollowCube!(
     material = nothing,
     color = nothing,
 ) where {FT,UT}
-    #push!(nvertices(turtle), 8)
-    #push!(ntriangles(turtle), 8)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     HollowCube!(geoms(turtle), trans)
     move && f!(turtle, length)
@@ -341,6 +371,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> HollowCylinder!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
+```
 """
 function HollowCylinder!(
     turtle::Turtle{FT,UT};
@@ -353,8 +390,6 @@ function HollowCylinder!(
     color = nothing,
 ) where {FT,UT}
     @assert iseven(n)
-    #push!(nvertices(turtle), n)
-    #push!(ntriangles(turtle), n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     HollowCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
@@ -395,6 +430,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> HollowFrustum!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
+```
 """
 function HollowFrustum!(
     turtle::Turtle{FT,UT};
@@ -408,8 +450,6 @@ function HollowFrustum!(
     color = nothing,
 ) where {FT,UT}
     @assert iseven(n)
-    #push!(nvertices(turtle), n)
-    #push!(ntriangles(turtle), n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     HollowFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
@@ -451,6 +491,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> SolidCone!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
+```
 """
 function SolidCone!(
     turtle::Turtle{FT,UT};
@@ -463,8 +510,6 @@ function SolidCone!(
     color = nothing,
 ) where {FT,UT}
     @assert iseven(n)
-    #push!(nvertices(turtle), n/2 + 2)
-    #push!(ntriangles(turtle), n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     SolidCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
@@ -504,6 +549,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> SolidCube!(turtle; length = 1.0, width = 1.0, height = 2.0);
+```
 """
 function SolidCube!(
     turtle::Turtle{FT,UT};
@@ -514,8 +566,6 @@ function SolidCube!(
     material = nothing,
     color = nothing,
 ) where {FT,UT}
-    #push!(nvertices(turtle), 8)
-    #push!(ntriangles(turtle), 12)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     SolidCube!(geoms(turtle), trans)
     move && f!(turtle, length)
@@ -556,6 +606,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> SolidCylinder!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80);
+```
 """
 function SolidCylinder!(
     turtle::Turtle{FT,UT};
@@ -568,8 +625,6 @@ function SolidCylinder!(
     color = nothing,
 ) where {FT,UT}
     @assert iseven(n)
-    #push!(nvertices(turtle), n/2 + 2)
-    #push!(ntriangles(turtle), n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     SolidCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
@@ -610,6 +665,13 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> SolidFrustum!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80);
+```
 """
 function SolidFrustum!(
     turtle::Turtle{FT,UT};
@@ -623,8 +685,6 @@ function SolidFrustum!(
     color = nothing,
 ) where {FT,UT}
     @assert iseven(n)
-    #push!(nvertices(turtle), n/2 + 2)
-    #push!(ntriangles(turtle), n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     SolidFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
@@ -675,6 +735,17 @@ ColorTypes.jl).
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> import PlantGeomPrimitives as PG
+
+julia> e = PG.Ellipse();
+
+julia> turtle = Turtle();
+
+julia> Mesh!(turtle, e, scale = PG.Vec(2.0, 2.0, 2.0));
+```
 """
 function Mesh!(
     turtle::Turtle{FT,UT},
@@ -693,8 +764,6 @@ function Mesh!(
     append!(vertices(geoms(turtle)), vertices(mnew))
     append!(normals(geoms(turtle)), normals(mnew))
     append!(faces(turtle), (nv .+ face for face in mnew.faces))
-    #push!(nvertices(turtle), nvertices(mnew))
-    #push!(ntriangles(turtle), ntriangles(mnew))
     move && f!(turtle, length)
     # Materials and colors
     update_material!(turtle, material, ntriangles(mnew))

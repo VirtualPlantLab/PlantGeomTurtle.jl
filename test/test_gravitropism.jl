@@ -1,4 +1,5 @@
 using PlantGeomTurtle
+using PlantGeomPrimitives
 using Test
 using LinearAlgebra
 

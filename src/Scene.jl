@@ -31,7 +31,7 @@ function Scene(
     graphs::Vector{<:Graph},
     ::Type{FT} = Float64;
     parallel = false,
-    message = nothing
+    message = nothing,
 ) where {FT}
     scenes = Vector{Scene}(undef, length(graphs))
     if parallel

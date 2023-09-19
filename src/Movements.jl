@@ -8,6 +8,16 @@
     t!(turtle; to = O())
 
 Translate a turtle to the new position `to` (a `Vec` object).
+
+## Examples
+
+```jldoctest
+julia> turtle = Turtle();
+
+julia> using PlantGeomPrimitives
+
+julia> t!(turtle, to = Y(1.0));
+```
 """
 function t!(turtle::Turtle{FT,UT}; to::Vec{FT} = O(FT)) where {FT,UT}
     update!(turtle, to = to, head = head(turtle), up = up(turtle), arm = arm(turtle))
@@ -29,6 +39,16 @@ feed!(turtle::Turtle, node::T, data = nothing) = t!(turtle, to = node.to)
 
 Orient a turtle to a new direction by re-defining the local reference system.
 The arguments `head`, `up` and `arm` should be of type `Vec`.
+
+## Examples
+
+```jldoctest
+julia> turtle = Turtle();
+
+julia> using PlantGeomPrimitives
+
+julia> or!(turtle, head = Y(), up = Z(), arm = X());
+```
 """
 function or!(
     turtle::Turtle{FT,UT};
@@ -61,6 +81,16 @@ feed!(turtle::Turtle, node::OR, data = nothing) =
 
 Set position and orientation of a turtle. The arguments `to`, `head`, `up` and
 `arm` should be of type `Vec` and be passed as keyword arguments.
+
+## Examples
+
+```jldoctest
+julia> turtle = Turtle();
+
+julia> using PlantGeomPrimitives
+
+julia> set!(turtle, to = O(), head = Y(), up = Z(), arm = X());
+```
 """
 function set!(
     turtle::Turtle{FT,UT};
@@ -95,6 +125,14 @@ feed!(turtle::Turtle, node::SET, data = nothing) =
 
 Rotates a turtle around up axis. Angle must be in hexadecimal degrees and the
 rotation is clockwise.
+
+## Examples
+
+```jldoctest
+julia> turtle = Turtle();
+
+julia> ru!(turtle, 45.0);
+```
 """
 function ru!(turtle::Turtle{FT,UT}, angle::FT) where {FT,UT}
     angle *= FT(pi) / FT(180)
@@ -122,6 +160,14 @@ feed!(turtle::Turtle, node::RU, data = nothing) = ru!(turtle, node.angle)
 
 Rotates a turtle around arm axis. Angle must be in hexadecimal degrees and the
 rotation is clockwise.
+
+## Examples
+
+```jldoctest
+julia> turtle = Turtle();
+
+julia> ra!(turtle, 45.0);
+```
 """
 function ra!(turtle::Turtle{FT,UT}, angle::FT) where {FT,UT}
     angle *= FT(pi) / FT(180)
@@ -149,6 +195,14 @@ feed!(turtle::Turtle, node::RA, data = nothing) = ra!(turtle, node.angle)
 
 Rotate turtle around head axis. Angle must be in hexadecimal degrees and the
 rotation is clockwise.
+
+## Examples
+
+```jldoctest
+julia> turtle = Turtle();
+
+julia> rh!(turtle, 45.0);
+```
 """
 function rh!(turtle::Turtle{FT,UT}, angle::FT) where {FT,UT}
     angle *= FT(pi) / FT(180)
@@ -175,6 +229,14 @@ feed!(turtle::Turtle, node::RH, data = nothing) = rh!(turtle, node.angle)
     f!(turtle, dist)
 
 Move turtle forward a given distance.
+
+## Examples
+
+```jldoctest
+julia> turtle = Turtle();
+
+julia> f!(turtle, 2.0);
+```
 """
 function f!(turtle::Turtle{FT,UT}, dist::FT) where {FT,UT}
     to = pos(turtle) .+ head(turtle) .* dist
@@ -223,6 +285,16 @@ and the vertical axis) with the absolute value of `strength` being the
 proportion between the two. `strength` should vary between -1 and 1. If
 `strength` is negative, the turtle rotates downwards (i.e., towards negative
 values of Z axis), otherwise upwards.
+
+## Examples
+
+```jldoctest
+julia> turtle = Turtle();
+
+julia> ra!(turtle, 45.0);
+
+julia> rv!(turtle, 0.5);
+```
 """
 function rv!(turtle::Turtle{FT,UT}, strength::FT) where {FT,UT}
     @inbounds begin

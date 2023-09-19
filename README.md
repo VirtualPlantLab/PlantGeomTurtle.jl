@@ -1,5 +1,7 @@
 # PlantGeomTurtle
 
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://VirtualPlantLab.github.io/PlantGeomTurtle.jl/stable/)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://VirtualPlantLab.github.io/PlantGeomTurtle.jl/dev/)
 [![CI](https://github.com/VirtualPlantLab/PlantGeomTurtle.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/VirtualPlantLab/PlantGeomTurtle.jl/actions/workflows/CI.yml)
 [![Coverage](https://codecov.io/gh/VirtualPlantLab/PlantGeomTurtle.jl/branch/master/graph/badge.svg?token=LCZHPERHUN)](https://codecov.io/gh/VirtualPlantLab/PlantGeomTurtle.jl)
 [![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)

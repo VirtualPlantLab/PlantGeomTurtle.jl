@@ -1,3 +1,4 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+PlantGeomPrimitives = "7eef3cc5-4580-4ff0-8f6f-933507db6664"
 PlantGeomTurtle = "7d6e2781-1c99-4c66-97ec-106669f3e96e"

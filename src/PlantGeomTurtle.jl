@@ -21,6 +21,9 @@ import PlantGeomPrimitives:
     materials,
     colors,
     mesh,
+    vertices,
+    faces,
+    normals,
     Triangle!,
     Rectangle!,
     Trapezoid!,
@@ -32,7 +35,8 @@ import PlantGeomPrimitives:
     HollowCone!,
     SolidCone!,
     HollowFrustum!,
-    SolidFrustum!
+    SolidFrustum!,
+    transform!
 
 export Turtle,
     feed!,
