@@ -9,5 +9,6 @@
 [![SciML Code Style](https://img.shields.io/static/v1?label=code%20style&message=SciML&color=9558b2&labelColor=389826)](https://github.com/SciML/SciMLStyle)
 
 This package is a component of the VPL ecosystem. It implements algorithms for procedural
-generation of plant geometry from graphs using turtle graphics. However, users should
-use the [VPL](https://github.com/VirtualPlantLab/VPL) package instead of this one.
+generation of plant geometry from graphs using turtle graphics. This package is a component
+of the [Virtual Plant Lab](http://virtualplantlab.com/). Users should install instead the
+interface package [VPL.jl](https://github.com/VirtualPlantLab/VPL.jl).
