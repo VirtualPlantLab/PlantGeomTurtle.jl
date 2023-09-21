@@ -5,3 +5,6 @@
 /docs/Manifest.toml
 /docs/build/
 dev
+build
+.gitignore
+/test/Manifest.toml
