@@ -28,7 +28,7 @@ to include nodes in a graph without an associated geometry.
 feed!(turtle::Turtle, node::Node, data) = nothing
 
 #=
-# Traverse the graph depth-first starting at the getroot node and execute the
+# Traverse the graph depth-first starting at the get_root node and execute the
 feed!() function at each node. The state of the turtle is stored before each
 branching point by inserting a new SET node. This allows resetting the turtle to
 the same position and orientation prior to entering each branch.
@@ -43,7 +43,7 @@ the graph.
 function feed!(turtle::Turtle, g::Graph)
     # Use a LIFO stack to keep track of nodes in traversal
     nodeStack = GraphNode[]
-    push!(nodeStack, getroot(g))
+    push!(nodeStack, get_root(g))
     # Iterate over all nodes in the graph
     while (length(nodeStack) > 0)
         # Always process geometry from the last node

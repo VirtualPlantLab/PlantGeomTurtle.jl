@@ -6,7 +6,7 @@ import CoordinateTransformations: SDiagonal, LinearMap, Translation
 import Rotations: RotX, RotY, RotZ
 import Unrolled: @unroll
 import ColorTypes: Colorant
-import PlantGraphs: Node, Graph, GraphNode, getroot, children, data
+import PlantGraphs: Node, Graph, GraphNode, get_root, children, data
 import PlantGeomPrimitives:
     Mesh,
     Vec,

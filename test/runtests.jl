@@ -8,7 +8,7 @@ DocMeta.setdocmeta!(
     PlantGeomTurtle,
     :DocTestSetup,
     :(using PlantGeomTurtle);
-    recursive = true
+    recursive = true,
 )
 doctest(PlantGeomTurtle)
 
