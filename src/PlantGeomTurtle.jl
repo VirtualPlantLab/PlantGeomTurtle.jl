@@ -73,8 +73,11 @@ export Turtle,
     HollowCone!,
     SolidCone!,
     HollowFrustum!,
-    SolidFrustum!
-
+    SolidFrustum!,
+    Scene,
+    colors,
+    faces,
+    materials
 
 # Geometry turtle
 include("Turtle.jl")
