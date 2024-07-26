@@ -763,7 +763,6 @@ function Mesh!(
     nv = nvertices(geoms(turtle))
     append!(vertices(geoms(turtle)), vertices(mnew))
     append!(normals(geoms(turtle)), normals(mnew))
-    append!(faces(turtle), (nv .+ face for face in mnew.faces))
     move && f!(turtle, length)
     # Materials and colors
     update_material!(turtle, material, ntriangles(mnew))
