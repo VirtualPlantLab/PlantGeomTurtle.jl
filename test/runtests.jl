@@ -68,4 +68,5 @@ end
 # Scenes from graphs
 @testset "scene_graphs" begin
     include("test_graphs.jl")
+    include("test_scenes.jl")
 end

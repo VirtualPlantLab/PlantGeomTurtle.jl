@@ -162,7 +162,7 @@ function update_material!(turtle, material, nt)
 end
 
 # Add color(s) associated to a primitive
-function update_color!(turtle, color, nvertices)
+function update_color!(turtle, color, ntriangles)
     if !isnothing(color)
         # All triangles share the same color
         if color isa Colorant
