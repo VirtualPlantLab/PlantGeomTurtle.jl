@@ -4,8 +4,6 @@ import PlantGeomPrimitives as Geom
 using PlantGeomTurtle
 using Test
 import ColorTypes: RGB
-import GLMakie
-GLMakie.activate!(inline = false)
 
 ##### Test turtle-based construction of a scene #####
 
