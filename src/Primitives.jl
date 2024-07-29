@@ -58,7 +58,7 @@ function Ellipse!(
     # Materials and colors
     nt = n
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -113,7 +113,7 @@ function Triangle!(
     # Materials and colors
     nt = 1
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -168,7 +168,7 @@ function Rectangle!(
     # Materials and colors
     nt = 2
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -226,7 +226,7 @@ function Trapezoid!(
     # Materials and colors
     nt = 2
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -285,7 +285,7 @@ function HollowCone!(
     # Materials and colors
     nt = n
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -342,7 +342,7 @@ function HollowCube!(
     # Materials and colors
     nt = 8
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -402,7 +402,7 @@ function HollowCylinder!(
     # Materials and colors
     nt = n
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -463,7 +463,7 @@ function HollowFrustum!(
     # Materials and colors
     nt = n
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -524,7 +524,7 @@ function SolidCone!(
     # Materials and colors
     nt = n
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -581,7 +581,7 @@ function SolidCube!(
     # Materials and colors
     nt = 12
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -641,7 +641,7 @@ function SolidCylinder!(
     # Materials and colors
     nt = n
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -702,7 +702,7 @@ function SolidFrustum!(
     # Materials and colors
     nt = n
     update_material!(turtle, material, nt)
-    update_color!(turtle, color, 3nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
