@@ -164,16 +164,22 @@ end
 # Add color(s) associated to a primitive
 function update_color!(turtle, color, nvertices)
     if !isnothing(color)
-        # All vertices share the same color
+        # All triangles share the same color
         if color isa Colorant
-            for _ = 1:nvertices
-                push!(colors(turtle), color)
+            for _ = 1:ntriangles
+                for _ = 1:3
+                    push!(colors(turtle), color)
+                end
             end
-            # Each vertex has its own color
-        elseif length(color) == nvertices
-            append!(colors(turtle), color)
+        # Each triangle has its own color
+        elseif length(color) == ntriangles
+            for i = 1:ntriangles
+                for _ = 1:3
+                    push!(colors(turtle), color[i])
+                end
+            end
         else
-            error("Provided either a color or a vector of colors of length $(nvertices)")
+            error("Provided either a color or a vector of colors of length $(ntriangles)")
         end
     end
     return nothing
