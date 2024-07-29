@@ -15,7 +15,7 @@ doctest(PlantGeomTurtle)
 # Aqua
 @testset "Aqua" begin
     # Creating Scene from Graph results in type piracy
-    Aqua.test_all(PlantGeomTurtle, ambiguities = false, piracy = false)
+    Aqua.test_all(PlantGeomTurtle, ambiguities = false, piracies = false)
     Aqua.test_ambiguities([PlantGeomTurtle])
 end
 
@@ -68,4 +68,5 @@ end
 # Scenes from graphs
 @testset "scene_graphs" begin
     include("test_graphs.jl")
+    include("test_scenes.jl")
 end

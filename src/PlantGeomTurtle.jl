@@ -22,7 +22,6 @@ import PlantGeomPrimitives:
     colors,
     mesh,
     vertices,
-    faces,
     normals,
     Triangle!,
     Rectangle!,
@@ -76,7 +75,6 @@ export Turtle,
     SolidFrustum!,
     Scene,
     colors,
-    faces,
     materials
 
 # Geometry turtle

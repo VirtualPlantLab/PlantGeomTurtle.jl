@@ -56,8 +56,9 @@ function Ellipse!(
     Ellipse!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, n)
-    update_color!(turtle, color, n + 1)
+    nt = n
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -110,8 +111,9 @@ function Triangle!(
     Triangle!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, 1)
-    update_color!(turtle, color, 3)
+    nt = 1
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -164,8 +166,9 @@ function Rectangle!(
     Rectangle!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, 2)
-    update_color!(turtle, color, 4)
+    nt = 2
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -221,8 +224,9 @@ function Trapezoid!(
     Trapezoid!(geoms(turtle), trans, ratio)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, 2)
-    update_color!(turtle, color, 4)
+    nt = 2
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -279,8 +283,9 @@ function HollowCone!(
     HollowCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, n)
-    update_color!(turtle, color, n + 1)
+    nt = n
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -335,8 +340,9 @@ function HollowCube!(
     HollowCube!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, 8)
-    update_color!(turtle, color, 8)
+    nt = 8
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -394,8 +400,9 @@ function HollowCylinder!(
     HollowCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, n)
-    update_color!(turtle, color, n)
+    nt = n
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -454,8 +461,9 @@ function HollowFrustum!(
     HollowFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, n)
-    update_color!(turtle, color, n)
+    nt = n
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -514,8 +522,9 @@ function SolidCone!(
     SolidCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, n)
-    update_color!(turtle, color, n / 2 + 2)
+    nt = n
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -570,8 +579,9 @@ function SolidCube!(
     SolidCube!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, 12)
-    update_color!(turtle, color, 8)
+    nt = 12
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -629,8 +639,9 @@ function SolidCylinder!(
     SolidCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, n)
-    update_color!(turtle, color, n / 2 + 2)
+    nt = n
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -689,8 +700,9 @@ function SolidFrustum!(
     SolidFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, n)
-    update_color!(turtle, color, n / 2 + 2)
+    nt = n
+    update_material!(turtle, material, nt)
+    update_color!(turtle, color, nt)
     return nothing
 end
 
@@ -763,7 +775,6 @@ function Mesh!(
     nv = nvertices(geoms(turtle))
     append!(vertices(geoms(turtle)), vertices(mnew))
     append!(normals(geoms(turtle)), normals(mnew))
-    append!(faces(turtle), (nv .+ face for face in mnew.faces))
     move && f!(turtle, length)
     # Materials and colors
     update_material!(turtle, material, ntriangles(mnew))
