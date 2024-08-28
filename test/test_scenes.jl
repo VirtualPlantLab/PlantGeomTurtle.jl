@@ -59,6 +59,7 @@ let
         RU(-60.0) +
         sn.E64(L / 3)
     end
+    # Different color per triangle
     function PlantGeomTurtle.feed!(turtle::Turtle, e::sn.E64, data)
         HollowCylinder!(
             turtle,
@@ -74,5 +75,26 @@ let
     rule = Rule(sn.E64, rhs = Kochsnowflake)
     Koch = Graph(axiom = axiom, rules = Tuple(rule))
     scene = Scene(Koch);
+    @test colors(scene)[1] != colors(scene)[4]
+    @test length(colors(scene)) == nvertices(scene)
+
+    # One color per geometry
+    function PlantGeomTurtle.feed!(turtle::Turtle, e::sn.E64, data)
+        HollowCylinder!(
+            turtle,
+            length = e.length,
+            width = e.length / 10,
+            height = e.length / 10,
+            move = true,
+            n = 20,
+            color = rand(RGB),
+        )
+        return nothing
+    end
+    rule = Rule(sn.E64, rhs = Kochsnowflake)
+    Koch = Graph(axiom = axiom, rules = Tuple(rule))
+    scene = Scene(Koch);
+    @test colors(scene)[1] == colors(scene)[4]
+    @test length(colors(scene)) == nvertices(scene)
 
 end
