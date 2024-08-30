@@ -67,7 +67,7 @@ let
             height = e.length / 10,
             move = true,
             n = 20,
-            color = [rand(RGB) for _ in 1:20],
+            colors = [rand(RGB) for _ in 1:20],
         )
         return nothing
     end

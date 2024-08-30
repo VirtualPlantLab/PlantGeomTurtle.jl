@@ -3,8 +3,6 @@ using PlantGraphs
 import PlantGeomPrimitives as G
 using Test
 
-#let
-
 # Nodes with geometries
 module NodeTypes
 import PlantGraphs: Node
@@ -19,6 +17,7 @@ end
 
 import .NodeTypes as NT
 
+let
 
 # Test basic feed! algorithm
 function PlantGeomTurtle.feed!(t::Turtle, n::NT.Plate, data)
@@ -83,4 +82,4 @@ axiom = RV(0.5) + NT.Point()
 graph = Graph(axiom = axiom)
 G.Scene(graph);
 
-#end
+end

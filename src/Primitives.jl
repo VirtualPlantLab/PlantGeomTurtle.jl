@@ -6,7 +6,7 @@
 
 """
     Ellipse!(turtle; length = 1.0, width = 1.0, n = 20, move = false,
-             material = nothing, color = nothing)
+             materials = nothing, colors = nothing)
 
 Generate an ellipse in front of a turtle and feed it to a turtle.
 
@@ -16,8 +16,14 @@ Generate an ellipse in front of a turtle and feed it to a turtle.
 - `width`: Width of the ellipse.
 - `n`: Number of triangles of the mesh approximating the ellipse (an integer).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A triangle mesh will be generated with `n` triangles that approximates an ellipse.
@@ -43,28 +49,27 @@ julia> Ellipse!(turtle; length = 1.0, width = 0.5, n = 40);
 ```
 """
 function Ellipse!(
-    turtle::Turtle{FT,UT};
-    length = one(FT),
-    width = one(FT),
-    n = 20,
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                turtle::Turtle{FT,UT};
+                length = one(FT),
+                width = one(FT),
+                n = 20,
+                move = false,
+                materials = nothing,
+                colors = nothing) where {FT,UT}
     # Generate the ellipse and add it to the turtle
     trans = transform(turtle, (one(FT), width / FT(2), length / FT(2)))
     Ellipse!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     Triangle!(turtle; length = 1.0, width = 1.0, move = false,
-              material = nothing, color = nothing)
+              materials = nothing, colors = nothing)
 
 Generate a triangle in front of the turtle and feed it to a turtle.
 
@@ -73,8 +78,14 @@ Generate a triangle in front of the turtle and feed it to a turtle.
 - `length`: Length of the triangle.
 - `width`: Width of the triangle.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A triangle mesh will be generated representing the triangle.
@@ -100,26 +111,25 @@ julia> Triangle!(turtle; length = 2.0, width = 1.0);
 ```
 """
 function Triangle!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                turtle::Turtle{FT,UT};
+                length::FT = one(FT),
+                width::FT = one(FT),
+                move = false,
+                materials = nothing,
+                colors = nothing) where {FT,UT}
     trans = transform(turtle, (one(FT), width / FT(2), length))
     Triangle!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
     nt = 1
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     Rectangle!(turtle; length = 1.0, width = 1.0, move = false,
-               material = nothing, color = nothing)
+               colors = nothing, materials = nothing)
 
 Generate a rectangle in front of the turtle and feed it to a turtle.
 
@@ -128,8 +138,14 @@ Generate a rectangle in front of the turtle and feed it to a turtle.
 - `length`: Length of the rectangle.
 - `width`: Width of the rectangle.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A triangle mesh will be generated representing the rectangle.
@@ -155,27 +171,26 @@ julia> Rectangle!(turtle; length = 1.0, width = 0.5);
 ```
 """
 function Rectangle!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                    turtle::Turtle{FT,UT};
+                    length::FT = one(FT),
+                    width::FT = one(FT),
+                    move = false,
+                    materials = nothing,
+                    colors = nothing) where {FT,UT}
     trans = transform(turtle, (one(FT), width / FT(2), length))
     Rectangle!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
     nt = 2
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 
 """
     Trapezoid!(turtle; length = 1.0, width = 1.0, ratio = 1.0, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a trapezoid in front of the turtle and feed it to a turtle.
 
@@ -185,8 +200,14 @@ Generate a trapezoid in front of the turtle and feed it to a turtle.
 - `width`: Width of the base of the trapezoid.
 - `ratio`: Ratio between the width of the top and base of the trapezoid.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A triangle mesh will be generated representing the trapezoid.
@@ -212,27 +233,26 @@ julia> Trapezoid!(turtle; length = 1.0, width = 1.0, ratio = 0.5);
 ```
 """
 function Trapezoid!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    ratio::FT = one(FT),
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                    turtle::Turtle{FT,UT};
+                    length::FT = one(FT),
+                    width::FT = one(FT),
+                    ratio::FT = one(FT),
+                    move = false,
+                    materials = nothing,
+                    colors = nothing) where {FT,UT}
     trans = transform(turtle, (one(FT), width / FT(2), length))
     Trapezoid!(geoms(turtle), trans, ratio)
     move && f!(turtle, length)
     # Materials and colors
     nt = 2
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 20, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a hollow cone in front of the turtle and feed it to a turtle.
 
@@ -243,8 +263,14 @@ Generate a hollow cone in front of the turtle and feed it to a turtle.
 - `height`: Height of the hollow cone.
 - `n`: Number of triangles in the mesh.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the hollow cone.
@@ -270,28 +296,27 @@ julia> Trapezoid!(turtle; length = 1.0, width = 1.0, ratio = 0.5);
 ```
 """
 function HollowCone!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    n::Int = 20,
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                    turtle::Turtle{FT,UT};
+                    length::FT = one(FT),
+                    width::FT = one(FT),
+                    height::FT = one(FT),
+                    n::Int = 20,
+                    move = false,
+                    materials = nothing,
+                    colors = nothing) where {FT,UT}
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     HollowCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     HollowCube!(turtle; length = 1.0, width = 1.0, height = 1.0, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a hollow cube in front of the turtle and feed it to a turtle.
 
@@ -301,8 +326,14 @@ Generate a hollow cube in front of the turtle and feed it to a turtle.
 - `width`: Width of the rectangle at the base of the hollow cube.
 - `height`: Height of the hollow cube.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated of a hollow cube.
@@ -328,27 +359,26 @@ julia> HollowCube!(turtle; length = 1.0, width = 1.0, height = 2.0);
 ```
 """
 function HollowCube!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                    turtle::Turtle{FT,UT};
+                    length::FT = one(FT),
+                    width::FT = one(FT),
+                    height::FT = one(FT),
+                    move = false,
+                    materials = nothing,
+                    colors = nothing) where {FT,UT}
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     HollowCube!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
     nt = 8
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     HollowCylinder!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 40, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a hollow cylinder in front of the turtle and feed it to a turtle.
 
@@ -359,8 +389,14 @@ Generate a hollow cylinder in front of the turtle and feed it to a turtle.
 - `height`: Height of the hollow cylinder.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the hollow cylinder.
@@ -386,29 +422,28 @@ julia> HollowCylinder!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
 function HollowCylinder!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    n::Int = 40,
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                    turtle::Turtle{FT,UT};
+                    length::FT = one(FT),
+                    width::FT = one(FT),
+                    height::FT = one(FT),
+                    n::Int = 40,
+                    move = false,
+                    materials = nothing,
+                    colors = nothing) where {FT,UT}
     @assert iseven(n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     HollowCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     HollowFrustum!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 40, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a hollow frustum in front of the turtle and feed it to a turtle.
 
@@ -419,8 +454,14 @@ Generate a hollow frustum in front of the turtle and feed it to a turtle.
 - `height`: Height of the hollow frustum.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the hollow frustum.
@@ -446,31 +487,30 @@ julia> HollowFrustum!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
 function HollowFrustum!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    ratio::FT = one(FT),
-    n::Int = 40,
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                    turtle::Turtle{FT,UT};
+                    length::FT = one(FT),
+                    width::FT = one(FT),
+                    height::FT = one(FT),
+                    ratio::FT = one(FT),
+                    n::Int = 40,
+                    move = false,
+                    materials = nothing,
+                    colors = nothing) where {FT,UT}
     @assert iseven(n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     HollowFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 
 """
     SolidCone!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 40, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a solid frustum in front of the turtle and feed it to a turtle.
 
@@ -481,8 +521,14 @@ Generate a solid frustum in front of the turtle and feed it to a turtle.
 - `height`: Height of the solid cone.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the solid cone.
@@ -508,29 +554,28 @@ julia> SolidCone!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
 function SolidCone!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    n::Int = 40,
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                turtle::Turtle{FT,UT};
+                length::FT = one(FT),
+                width::FT = one(FT),
+                height::FT = one(FT),
+                n::Int = 40,
+                move = false,
+                materials = nothing,
+                colors = nothing) where {FT,UT}
     @assert iseven(n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     SolidCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     SolidCube!(turtle; length = 1.0, width = 1.0, height = 1.0, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a solid cube in front of the turtle and feed it to a turtle.
 
@@ -540,8 +585,14 @@ Generate a solid cube in front of the turtle and feed it to a turtle.
 - `width`: Width of the rectangle at the base of the solid cube.
 - `height`: Height of the solid cube.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated of a solid cube.
@@ -567,27 +618,26 @@ julia> SolidCube!(turtle; length = 1.0, width = 1.0, height = 2.0);
 ```
 """
 function SolidCube!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                turtle::Turtle{FT,UT};
+                length::FT = one(FT),
+                width::FT = one(FT),
+                height::FT = one(FT),
+                move = false,
+                materials = nothing,
+                colors = nothing) where {FT,UT}
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     SolidCube!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
     nt = 12
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     SolidCylinder!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 80, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a solid cylinder in front of the turtle and feed it to a turtle.
 
@@ -598,8 +648,14 @@ Generate a solid cylinder in front of the turtle and feed it to a turtle.
 - `height`: Height of the solid cylinder.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the solid cylinder.
@@ -625,29 +681,28 @@ julia> SolidCylinder!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80);
 ```
 """
 function SolidCylinder!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    n::Int = 80,
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                    turtle::Turtle{FT,UT};
+                    length::FT = one(FT),
+                    width::FT = one(FT),
+                    height::FT = one(FT),
+                    n::Int = 80,
+                    move = false,
+                    materials = nothing,
+                    colors = nothing) where {FT,UT}
     @assert iseven(n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     SolidCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 """
     SolidFrustum!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 80, move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Generate a solid frustum in front of the turtle and feed it to a turtle.
 
@@ -658,8 +713,14 @@ Generate a solid frustum in front of the turtle and feed it to a turtle.
 - `height`: Height of the solid frustum.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the solid frustum.
@@ -685,35 +746,35 @@ julia> SolidFrustum!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80);
 ```
 """
 function SolidFrustum!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    ratio::FT = one(FT),
-    n::Int = 80,
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+                turtle::Turtle{FT,UT};
+                length::FT = one(FT),
+                width::FT = one(FT),
+                height::FT = one(FT),
+                ratio::FT = one(FT),
+                n::Int = 80,
+                move = false,
+                materials = nothing,
+                colors = nothing) where {FT,UT}
     @assert iseven(n)
     trans = transform(turtle, (height / FT(2), width / FT(2), length))
     SolidFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
-    update_material!(turtle, material, nt)
-    update_color!(turtle, color, nt)
+    update_material!(turtle, materials, nt)
+    update_color!(turtle, colors, nt)
     return nothing
 end
 
 function Ellipsoid!(
-    turtle::Turtle{FT,UT};
-    length::FT = one(FT),
-    width::FT = one(FT),
-    height::FT = one(FT),
-    n::Int = 20,
-    move = false,
-) where {FT,UT}
+                turtle::Turtle{FT,UT};
+                length::FT = one(FT),
+                width::FT = one(FT),
+                height::FT = one(FT),
+                n::Int = 20,
+                move = false,
+                materials = nothing,
+                colors = nothing) where {FT,UT}
     @error "Ellipsoid not implemented yet"
     return nothing
 end
@@ -721,7 +782,7 @@ end
 
 """
     Mesh!(turtle, m::Mesh; scale = Vec(1.0, 1.0, 1.0), move = false,
-    material = nothing, color = nothing)
+    colors = nothing, materials = nothing)
 
 Feed a pre-existing mesh to a turtle after scaling.
 
@@ -730,8 +791,14 @@ Feed a pre-existing mesh to a turtle after scaling.
 - `m`: The pre-existing unscaled mesh in standard position and orientation.
 - `scale`: Vector with scaling factors for the x, y and z axes.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `material`: The material object for the ray tracer (optional).
-- `color`: The color of the ellipse for rendering (optional).
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
+should be one color per triangle in the mesh or a single color (such that all triangles get
+the same color). This is an optional argument, but if no colors are provided, it the
+resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
+be one material per triangle in the mesh or a single material (such that all triangles get the
+same material). This is an optional argument, but if no materials are provided, the resulting
+scene cannot be used for ray tracing.
 
 ## Details
 A pre-existing mesh will be scaled (acccording to `scale`), rotate so that it is
@@ -760,13 +827,12 @@ julia> Mesh!(turtle, e, scale = PG.Vec(2.0, 2.0, 2.0));
 ```
 """
 function Mesh!(
-    turtle::Turtle{FT,UT},
-    m::Mesh;
-    scale::Vec{FT} = Vec{FT}(1.0, 1.0, 1.0),
-    move = false,
-    material = nothing,
-    color = nothing,
-) where {FT,UT}
+            turtle::Turtle{FT,UT},
+            m::Mesh;
+            scale::Vec{FT} = Vec{FT}(1.0, 1.0, 1.0),
+            move = false,
+            materials = nothing,
+            colors = nothing) where {FT,UT}
     # Transform the mesh
     trans = transform(turtle::Turtle, scale)
     mnew = deepcopy(m)
@@ -777,7 +843,7 @@ function Mesh!(
     append!(normals(geoms(turtle)), normals(mnew))
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, material, ntriangles(mnew))
-    update_color!(turtle, color, nvertices(mnew))
+    update_material!(turtle, materials, ntriangles(mnew))
+    update_color!(turtle, colors, nvertices(mnew))
     return nothing
 end

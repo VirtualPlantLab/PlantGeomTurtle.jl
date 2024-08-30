@@ -28,6 +28,13 @@ end
 end
 
 # Direct meshing
+module MatType
+    using PlantGeomPrimitives
+    struct Mat <: Material end
+end
+
+import .MatType: Mat
+
 @testset "ellipse" begin
     include("test_ellipse.jl")
 end
