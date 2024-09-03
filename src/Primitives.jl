@@ -838,12 +838,11 @@ function Mesh!(
     mnew = deepcopy(m)
     transform!(mnew, trans)
     # Feed the mesh onto the turtle
-    nv = nvertices(geoms(turtle))
     append!(vertices(geoms(turtle)), vertices(mnew))
     append!(normals(geoms(turtle)), normals(mnew))
     move && f!(turtle, length)
     # Materials and colors
     update_material!(turtle, materials, ntriangles(mnew))
-    update_color!(turtle, colors, nvertices(mnew))
+    update_color!(turtle, colors, ntriangles(mnew))
     return nothing
 end
