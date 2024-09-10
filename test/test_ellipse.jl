@@ -10,14 +10,18 @@ let
     # Construct ellipses using a turtle
     e = VG.Ellipse(length = 2.0, width = 2.0, n = n)
     t = VT.Turtle(Float64)
-    VT.Ellipse!(t; length = 2.0, width = 2.0, n = n, move = true)
-    @test VT.geoms(t) == e
-    @test VT.pos(t) == VT.Vec{Float64}(0, 0, 2)
-
-    t = VT.Turtle(Float64)
+    e2 = VT.Ellipse(t; length = 2.0, width = 2.0, n = n, move = false)
+    e == e2
     VT.Ellipse!(t; length = 2.0, width = 2.0, n = n, move = false)
     @test VT.geoms(t) == e
     @test VT.pos(t) == VT.Vec{Float64}(0, 0, 0)
+
+    t = VT.Turtle(Float64)
+    e2 = VT.Ellipse(t; length = 2.0, width = 2.0, n = n, move = true)
+    e == e2
+    VT.Ellipse!(t; length = 2.0, width = 2.0, n = n, move = true)
+    @test VT.geoms(t) != e
+    @test VT.pos(t) == VT.Vec{Float64}(0, 0, 4)
 
     # Check materials and colors
     t = VT.Turtle(Float64)

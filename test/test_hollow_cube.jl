@@ -12,8 +12,8 @@ let
     @test VT.pos(t) == VT.Vec{Float64}(0, 0, 2)
 
     t = VT.Turtle(Float64)
-    VT.HollowCube!(t; length = 2.0, width = 1.0, height = 1.0, move = false)
-    @test VT.geoms(t) == hc
+    hc2 = VT.HollowCube(t; length = 2.0, width = 1.0, height = 1.0, move = false)
+    @test hc2 == hc
     @test VT.pos(t) == VT.Vec{Float64}(0, 0, 0)
 
     # Check materials and colors

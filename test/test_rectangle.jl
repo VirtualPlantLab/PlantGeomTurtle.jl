@@ -12,8 +12,8 @@ let
     @test VT.pos(t) == VT.Vec{Float64}(0, 0, 2)
 
     t = VT.Turtle(Float64)
-    VT.Rectangle!(t; length = 2.0, width = 2.0, move = false)
-    @test VT.geoms(t) == r
+    r2 = VT.Rectangle(t; length = 2.0, width = 2.0, move = false)
+    @test r2 == r
     @test VT.pos(t) == VT.Vec{Float64}(0, 0, 0)
 
     # Check materials and colors
