@@ -1284,9 +1284,9 @@ end
 
 """
     Mesh!(turtle, m::Mesh; scale = Vec(1.0, 1.0, 1.0), move = false,
-    colors = nothing, materials = nothing)
+          colors = nothing, materials = nothing, transform = true, deepcopy = true)
 
-Feed a pre-existing mesh to a turtle after scaling.
+Feed a pre-existing mesh to a turtle (with optional transformation).
 
 ## Arguments
 - `turtle`: The turtle that we feed the mesh to.
@@ -1301,6 +1301,9 @@ resulting scene cannot be visualized (the function `rennder()` will throw an err
 be one material per triangle in the mesh or a single material (such that all triangles get the
 same material). This is an optional argument, but if no materials are provided, the resulting
 scene cannot be used for ray tracing.
+- `transform`: Whether to to transform the mesh according to the turtle's position and
+orientation the scaling vector provided by the user.
+- `deepcopy`: Whether to make a deep copy of the mesh before feeding it to the turtle.
 
 ## Details
 A pre-existing mesh will be scaled (acccording to `scale`), rotate so that it is
@@ -1313,6 +1316,19 @@ When `move = true`, the turtle will be moved forward by a distance equal to `hei
 The material object must inherit from `Material` (see ray tracing documentation
 for detail) and the color can be any type that inherits from `Colorant` (from
 ColorTypes.jl).
+
+There are two expected use cases for this function:
+
+1. When the user defines a *reference* mesh that is used to generate multiple
+   instances of the same mesh with different scales at transformations. An example would be
+   an ad-hoc mesh that represents the shape of a leaf. In this case, the user wants to set
+   `transform = true` and `deepcopy = true`.
+
+2. When the user generates a mesh using a primitive function that takes the turtle as
+   argument, performs some operations on that mesh (e.g., calculating area, coordinates of the
+   center, etc) and then feed that mesh into the turtle. In this case, the user wants to set
+   `transform = false` (because the transformation was alread applied) and probably also
+   `deepcopy = false` because the deepcopy is an unnecessary cost.
 
 ## Return
 Returns `nothing` but modifies the `turtle` as a side effect.
@@ -1334,11 +1350,20 @@ function Mesh!(
             scale::Vec{FT} = Vec{FT}(1.0, 1.0, 1.0),
             move = false,
             materials = nothing,
-            colors = nothing) where {FT,UT}
-    # Transform the mesh
-    trans = transform(turtle::Turtle, scale)
-    mnew = deepcopy(m)
-    transform!(mnew, trans)
+            colors = nothing,
+            transform = true,
+            deepcopy = true) where {FT,UT}
+    # Optionally deepcopy the mesh
+    if deepcopy
+        mnew = deepcopy(m)
+    else
+        mnew = m
+    end
+    # Optionally apply transformation to mesh
+    if transform
+        trans = transform(turtle::Turtle, scale)
+        transform!(mnew, trans)
+    end
     # Feed the mesh onto the turtle
     append!(vertices(geoms(turtle)), vertices(mnew))
     append!(normals(geoms(turtle)), normals(mnew))
