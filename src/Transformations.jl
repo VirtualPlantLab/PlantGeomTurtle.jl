@@ -56,7 +56,7 @@ function rot(turtle::Turtle)
 end
 
 # Create an affine map based on turtle position, orientation
-function transform(turtle::Turtle)
+function transformation(turtle::Turtle)
     r = rot(turtle)
     t = translate(pos(turtle)...)
     t ∘ r
@@ -64,7 +64,7 @@ end
 
 # Create a transform based on turtle position, orientation and
 # user-provided scaling factors for each axis.
-function transform(turtle::Turtle, scales)
+function transformation(turtle::Turtle, scales)
     s = scale(scales...)
     r = rot(turtle)
     t = translate(pos(turtle)...)

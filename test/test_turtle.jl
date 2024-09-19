@@ -136,13 +136,13 @@ let
     test_f(VT.Turtle(Float32), 1.0f0)
 
     # Check transformations
-    trans = VT.transform(VT.Turtle(Float64))
+    trans = VT.transformation(VT.Turtle(Float64))
     @test trans isa CT.AffineMap
     trans.translation == VT.Vec{Float64}(0, 0, 0)
     trans.linear == CT.SDiagonal(1.0, 1.0, 1.0)
 
 
-    trans = VT.transform(VT.Turtle(Float64), (2.0, 2.0, 2.0))
+    trans = VT.transformation(VT.Turtle(Float64), (2.0, 2.0, 2.0))
     @test trans isa CT.AffineMap
     trans.translation == VT.Vec{Float64}(0, 0, 0)
     trans.linear == CT.SDiagonal(2.0, 2.0, 2.0)

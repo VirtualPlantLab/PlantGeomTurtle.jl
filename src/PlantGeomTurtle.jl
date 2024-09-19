@@ -7,6 +7,7 @@ import Rotations: RotX, RotY, RotZ
 import Unrolled: @unroll
 import ColorTypes: Colorant
 import PlantGraphs: Node, Graph, GraphNode, get_root, children, data
+import PlantGeomPrimitives as PG
 import PlantGeomPrimitives:
     Mesh,
     Vec,
@@ -57,6 +58,7 @@ export Turtle,
     pos,
     geoms,
     Mesh!,
+    Mesh,
     t!,
     T,
     or!,

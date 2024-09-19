@@ -57,7 +57,7 @@ function Ellipse!(
                 materials = nothing,
                 colors = nothing) where {FT,UT}
     # Generate the ellipse and add it to the turtle
-    trans = transform(turtle, (one(FT), width / FT(2), length / FT(2)))
+    trans = transformation(turtle, (one(FT), width / FT(2), length / FT(2)))
     Ellipse!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
@@ -101,7 +101,7 @@ julia> e = Ellipse(turtle; length = 1.0, width = 0.5, n = 40);
 function Ellipse(turtle::Turtle{FT,UT}; length = one(FT), width = one(FT), n = 20,
                  move = false) where {FT,UT}
     # Generate the ellipse and return it
-    trans = transform(turtle, (one(FT), width / FT(2), length / FT(2)))
+    trans = transformation(turtle, (one(FT), width / FT(2), length / FT(2)))
     m = Ellipse(trans; n = n)
     move && f!(turtle, length)
     return m
@@ -158,7 +158,7 @@ function Triangle!(
                 move = false,
                 materials = nothing,
                 colors = nothing) where {FT,UT}
-    trans = transform(turtle, (one(FT), width / FT(2), length))
+    trans = transformation(turtle, (one(FT), width / FT(2), length))
     Triangle!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
@@ -201,7 +201,7 @@ julia> t = Triangle(turtle; length = 2.0, width = 1.0);
 """
 function Triangle(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                   move = false) where {FT,UT}
-    trans = transform(turtle, (one(FT), width / FT(2), length))
+    trans = transformation(turtle, (one(FT), width / FT(2), length))
     t = Triangle(trans)
     move && f!(turtle, length)
     return t
@@ -257,7 +257,7 @@ function Rectangle!(
                     move = false,
                     materials = nothing,
                     colors = nothing) where {FT,UT}
-    trans = transform(turtle, (one(FT), width / FT(2), length))
+    trans = transformation(turtle, (one(FT), width / FT(2), length))
     Rectangle!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
@@ -300,7 +300,7 @@ julia> r = Rectangle(turtle; length = 2.0, width = 1.0);
 """
 function Rectangle(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                   move = false) where {FT,UT}
-    trans = transform(turtle, (one(FT), width / FT(2), length))
+    trans = transformation(turtle, (one(FT), width / FT(2), length))
     t = Rectangle(trans)
     move && f!(turtle, length)
     return t
@@ -358,7 +358,7 @@ function Trapezoid!(
                     move = false,
                     materials = nothing,
                     colors = nothing) where {FT,UT}
-    trans = transform(turtle, (one(FT), width / FT(2), length))
+    trans = transformation(turtle, (one(FT), width / FT(2), length))
     Trapezoid!(geoms(turtle), trans, ratio)
     move && f!(turtle, length)
     # Materials and colors
@@ -402,7 +402,7 @@ julia> t = Trapezoid(turtle; length = 1.0, width = 1.0, ratio = 0.5);
 """
 function Trapezoid(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                    ratio::FT = one(FT), move = false) where {FT,UT}
-    trans = transform(turtle, (one(FT), width / FT(2), length))
+    trans = transformation(turtle, (one(FT), width / FT(2), length))
     t = Trapezoid(trans, ratio)
     move && f!(turtle, length)
     return t
@@ -450,7 +450,7 @@ Returns `nothing` but modifies the `turtle` as a side effect.
 ```jldoctest
 julia> turtle = Turtle();
 
-julia> HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0, ratio = 0.5);
+julia> HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0);
 ```
 """
 function HollowCone!(
@@ -462,7 +462,7 @@ function HollowCone!(
                     move = false,
                     materials = nothing,
                     colors = nothing) where {FT,UT}
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     HollowCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
@@ -501,12 +501,12 @@ Returns a triangular mesh (object of type `Mesh`).
 ```jldoctest
 julia> turtle = Turtle();
 
-julia> HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0, ratio = 0.5);
+julia> HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0);
 ```
 """
 function HollowCone(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                     height::FT = one(FT), n::Int = 20, move = false) where {FT,UT}
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     c = HollowCone(trans; n = n)
     move && f!(turtle, length)
     return c
@@ -564,7 +564,7 @@ function HollowCube!(
                     move = false,
                     materials = nothing,
                     colors = nothing) where {FT,UT}
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     HollowCube!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
@@ -608,7 +608,7 @@ julia> c = HollowCube(turtle; length = 1.0, width = 1.0, height = 2.0);
 """
 function HollowCube(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                     height::FT = one(FT), move = false) where {FT,UT}
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     c = HollowCube(trans)
     move && f!(turtle, length)
     return c
@@ -669,7 +669,7 @@ function HollowCylinder!(
                     materials = nothing,
                     colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     HollowCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
@@ -715,7 +715,7 @@ julia> c = HollowCylinder(turtle; length = 1.0, width = 1.0, height = 2.0, n = 4
 function HollowCylinder(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                          height::FT = one(FT), n::Int = 40, move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     c = HollowCylinder(trans; n = n)
     move && f!(turtle, length)
     return c
@@ -778,7 +778,7 @@ function HollowFrustum!(
                     materials = nothing,
                     colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     HollowFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
@@ -825,7 +825,7 @@ function HollowFrustum(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = 
                         height::FT = one(FT), ratio::FT = one(FT), n::Int = 40,
                         move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     f = HollowFrustum(ratio, trans; n = n)
     move && f!(turtle, length)
     return f
@@ -886,7 +886,7 @@ function SolidCone!(
                 materials = nothing,
                 colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     SolidCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
@@ -932,7 +932,7 @@ julia> c = SolidCone(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 function SolidCone(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                     height::FT = one(FT), n::Int = 40, move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     c = SolidCone(trans; n = n)
     move && f!(turtle, length)
     return c
@@ -990,7 +990,7 @@ function SolidCube!(
                 move = false,
                 materials = nothing,
                 colors = nothing) where {FT,UT}
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     SolidCube!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
@@ -1034,7 +1034,7 @@ julia> c = SolidCube(turtle; length = 1.0, width = 1.0, height = 2.0);
 """
 function SolidCube(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                    height::FT = one(FT), move = false) where {FT,UT}
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     c = SolidCube(trans)
     move && f!(turtle, length)
     return c
@@ -1095,7 +1095,7 @@ function SolidCylinder!(
                     materials = nothing,
                     colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     SolidCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
@@ -1141,7 +1141,7 @@ julia> c = SolidCylinder(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80
 function SolidCylinder(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                         height::FT = one(FT), n::Int = 80, move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     c = SolidCylinder(trans; n = n)
     move && f!(turtle, length)
     return c
@@ -1203,7 +1203,7 @@ function SolidFrustum!(
                 materials = nothing,
                 colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     SolidFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
@@ -1250,7 +1250,7 @@ function SolidFrustum(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = o
                       height::FT = one(FT), ratio::FT = one(FT), n::Int = 80,
                       move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transform(turtle, (height / FT(2), width / FT(2), length))
+    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
     f = SolidFrustum(ratio, trans; n = n)
     move && f!(turtle, length)
     return f
@@ -1346,7 +1346,7 @@ julia> Mesh!(turtle, e, scale = PG.Vec(2.0, 2.0, 2.0));
 """
 function Mesh!(
             turtle::Turtle{FT,UT},
-            m::Mesh;
+            m::PG.Mesh;
             scale::Vec{FT} = Vec{FT}(1.0, 1.0, 1.0),
             move = false,
             materials = nothing,
@@ -1355,14 +1355,14 @@ function Mesh!(
             deepcopy = true) where {FT,UT}
     # Optionally deepcopy the mesh
     if deepcopy
-        mnew = deepcopy(m)
+        mnew = Base.deepcopy(m)
     else
         mnew = m
     end
     # Optionally apply transformation to mesh
     if transform
-        trans = transform(turtle::Turtle, scale)
-        transform!(mnew, trans)
+        trans = transformation(turtle::Turtle, scale)
+        PG.transform!(mnew, trans)
     end
     # Feed the mesh onto the turtle
     append!(vertices(geoms(turtle)), vertices(mnew))
@@ -1405,15 +1405,15 @@ julia> e = PG.Ellipse();
 
 julia> turtle = Turtle();
 
-julia> ne = Mesh(turtle, e, scale = PG.Vec(2.0, 2.0, 2.0));
+julia> ne = Mesh!(turtle, e, scale = PG.Vec(2.0, 2.0, 2.0));
 ```
 """
-function Mesh(turtle::Turtle{FT,UT}, m::Mesh; scale::Vec{FT} = Vec{FT}(1.0, 1.0, 1.0),
+function Mesh(turtle::Turtle{FT,UT}, m::PG.Mesh; scale::Vec{FT} = Vec{FT}(1.0, 1.0, 1.0),
               move = false) where {FT,UT}
     # Transform the mesh
-    trans = transform(turtle::Turtle, scale)
-    mnew = deepcopy(m)
-    transform!(mnew, trans)
+    trans = transformation(turtle::Turtle, scale)
+    mnew = Base.deepcopy(m)
+    PG.transform!(mnew, trans)
     move && f!(turtle, length)
     return mnew
 end
