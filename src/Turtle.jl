@@ -7,20 +7,20 @@
 # Head -> Z axis
 
 Base.@kwdef struct TCoord{FT}
-    head::Vec{FT} = Z(FT)
-    up::Vec{FT} = X(FT)
-    arm::Vec{FT} = Y(FT)
-    pos::Vec{FT} = Vec{FT}(0, 0, 0)
+    head::PGP.Vec{FT} = PGP.Z(FT)
+    up::PGP.Vec{FT} = PGP.X(FT)
+    arm::PGP.Vec{FT} = PGP.Y(FT)
+    pos::PGP.Vec{FT} = PGP.Vec{FT}(0, 0, 0)
 end
 
 
 #Base.@kwdef mutable struct Turtle{FT, UT}
 mutable struct Turtle{FT,UT}
     coords::TCoord{FT}# = TCoord{Float64}()
-    geoms::Mesh{Vec{FT}}# = Mesh(Float64)
+    geoms::PGP.Mesh{PGP.Vec{FT}}# = Mesh(Float64)
     material_ids::Vector{Int}# = Int[]
-    materials::Vector{Material}# = Material[]
-    colors::Vector{Colorant}# = Colorant[]
+    materials::Vector{PGP.Material}# = Material[]
+    colors::Vector{ColorTypes.Colorant}# = Colorant[]
     message::UT# = nothing
 end
 
@@ -36,7 +36,7 @@ precision as in `Turtle(Float32)`. The argument `message` is any user-defined
 object.
 """
 function Turtle(::Type{FT} = Float64, message = nothing) where {FT}
-    Turtle(TCoord{FT}(), Mesh(FT), Int[], Material[], Colorant[], message)#Int[], Int[], Material[], Colorant[], message)
+    Turtle(TCoord{FT}(), PGP.Mesh(FT), Int[], PGP.Material[], ColorTypes.Colorant[], message)#Int[], Int[], Material[], Colorant[], message)
 end
 
 # Update coordinate system associated to a turtle
@@ -108,9 +108,9 @@ primitive that was fed to the turtle.
 Extract the number of triangles in the mesh associated to each geometry
 primitive that was fed to the turtle.
 """
-# function ntriangles(turtle::Turtle)
-#     turtle.ntriangles
-# end
+function PGP.ntriangles(turtle::Turtle)
+    PGP.ntriangles(turtle.geoms)
+end
 
 """
     materials(turtle)
@@ -118,7 +118,7 @@ primitive that was fed to the turtle.
 Extract the material objects associated to each geometry primitive that was fed
 to the turtle.
 """
-function materials(turtle::Turtle)
+function PGP.materials(turtle::Turtle)
     turtle.materials
 end
 
@@ -133,7 +133,7 @@ end
 Extract the color objects associated to each geometry primitive that was fed
 to the turtle.
 """
-function colors(turtle::Turtle)
+function PGP.colors(turtle::Turtle)
     turtle.colors
 end
 
@@ -141,16 +141,16 @@ end
 # Add material(s) associated to a primitive
 function update_material!(turtle, material, nt)
     if !isnothing(material)
-        matid = length(materials(turtle)) + 1
+        matid = length(PGP.materials(turtle)) + 1
         # All triangles shared the same material
-        if material isa Material
-            push!(materials(turtle), material)
+        if material isa PGP.Material
+            push!(PGP.materials(turtle), material)
             for _ = 1:nt
                 push!(material_ids(turtle), matid)
             end
             # Each triangle has its own material
         elseif length(material) == nt
-            append!(materials(turtle), material)
+            append!(PGP.materials(turtle), material)
             for i = 0:nt-1
                 push!(material_ids(turtle), matid + i)
             end
@@ -165,17 +165,17 @@ end
 function update_color!(turtle, color, ntriangles)
     if !isnothing(color)
         # All triangles share the same color
-        if color isa Colorant
+        if color isa ColorTypes.Colorant
             for _ = 1:ntriangles
                 for _ = 1:3
-                    push!(colors(turtle), color)
+                    push!(PGP.colors(turtle), color)
                 end
             end
         # Each triangle has its own color
         elseif length(color) == ntriangles
             for i = 1:ntriangles
                 for _ = 1:3
-                    push!(colors(turtle), color[i])
+                    push!(PGP.colors(turtle), color[i])
                 end
             end
         else

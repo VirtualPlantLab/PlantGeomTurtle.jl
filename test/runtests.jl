@@ -7,7 +7,7 @@ using Documenter
 DocMeta.setdocmeta!(
     PlantGeomTurtle,
     :DocTestSetup,
-    :(using PlantGeomTurtle);
+    :(using PlantGeomTurtle; using PlantGeomPrimitives);
     recursive = true,
 )
 doctest(PlantGeomTurtle)
@@ -70,6 +70,9 @@ end
 end
 @testset "solid_cone" begin
     include("test_solid_cone.jl")
+end
+@testset "mesh" begin
+    include("test_mesh.jl")
 end
 
 # Scenes from graphs

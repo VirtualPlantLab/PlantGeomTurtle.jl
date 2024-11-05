@@ -10,12 +10,12 @@ version with a different precision by specifying the corresponding type as in
 `Scene(g, Float32)`. The Scene object contains a mesh of triangles as well as
 colors and materials associated to each primitive.
 """
-function Scene(graph::Graph, ::Type{FT} = Float64; message = nothing) where {FT}
+function PGP.Scene(graph::PG.Graph, ::Type{FT} = Float64; message = nothing) where {FT}
     # Retrieve the mesh of triangles
     turtle = Turtle(FT, message)
     feed!(turtle, graph)
     # Create the scene
-    Scene(geoms(turtle), colors(turtle), material_ids(turtle), materials(turtle))
+    PGP.Scene(geoms(turtle), PGP.colors(turtle), material_ids(turtle), PGP.materials(turtle))
 end
 
 """
@@ -27,21 +27,18 @@ multithreading (`parallel = true`). By default, double floating precision will
 be used (`Float64`) but it is possible to generate a version with a different
 precision by specifying the corresponding type as in `Scene(graphs, Float32)`.
 """
-function Scene(
-    graphs::Vector{<:Graph},
-    ::Type{FT} = Float64;
-    parallel = false,
-    message = nothing,
+function PGP.Scene(graphs::Vector{<:PG.Graph}, ::Type{FT} = Float64; parallel = false,
+                   message = nothing,
 ) where {FT}
-    scenes = Vector{Scene}(undef, length(graphs))
+    scenes = Vector{PGP.Scene}(undef, length(graphs))
     if parallel
         Threads.@threads for i in eachindex(graphs)
-            @inbounds scenes[i] = Scene(graphs[i], FT, message = message)
+            @inbounds scenes[i] = PGP.Scene(graphs[i], FT, message = message)
         end
     else
         for i in eachindex(graphs)
-            @inbounds scenes[i] = Scene(graphs[i], FT, message = message)
+            @inbounds scenes[i] = PGP.Scene(graphs[i], FT, message = message)
         end
     end
-    Scene(scenes)
+    PGP.Scene(scenes)
 end

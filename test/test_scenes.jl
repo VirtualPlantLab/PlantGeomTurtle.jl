@@ -75,4 +75,6 @@ let
     Koch = Graph(axiom = axiom, rules = Tuple(rule))
     scene = Scene(Koch);
 
+    scene = Scene([Koch, Koch])
+
 end

@@ -19,7 +19,7 @@ julia> using PlantGeomPrimitives
 julia> t!(turtle, to = Y(1.0));
 ```
 """
-function t!(turtle::Turtle{FT,UT}; to::Vec{FT} = O(FT)) where {FT,UT}
+function t!(turtle::Turtle{FT,UT}; to::PGP.Vec{FT} = PGP.O(FT)) where {FT,UT}
     update!(turtle, to = to, head = head(turtle), up = up(turtle), arm = arm(turtle))
 end
 
@@ -28,8 +28,8 @@ end
 
 Node that translates a turtle to the new position `to` (a `Vec` object).
 """
-struct T{FT} <: Node
-    to::Vec{FT}
+struct T{FT} <: PG.Node
+    to::PGP.Vec{FT}
 end
 feed!(turtle::Turtle, node::T, data = nothing) = t!(turtle, to = node.to)
 
@@ -52,13 +52,13 @@ julia> or!(turtle, head = Y(), up = Z(), arm = X());
 """
 function or!(
     turtle::Turtle{FT,UT};
-    head::Vec{FT} = Z(FT),
-    up::Vec{FT} = X(FT),
-    arm::Vec{FT} = Y(FT),
+    head::PGP.Vec{FT} = PGP.Z(FT),
+    up::PGP.Vec{FT} = PGP.X(FT),
+    arm::PGP.Vec{FT} = PGP.Y(FT),
 ) where {FT,UT}
-    @assert norm(head) ≈ one(FT)
-    @assert norm(up) ≈ one(FT)
-    @assert norm(arm) ≈ one(FT)
+    @assert L.norm(head) ≈ one(FT)
+    @assert L.norm(up) ≈ one(FT)
+    @assert L.norm(arm) ≈ one(FT)
     update!(turtle, head = head, up = up, arm = arm, to = pos(turtle))
 end
 
@@ -68,10 +68,10 @@ end
 Node that orients a turtle to a new direction by re-defining the local reference
 system.
 """
-struct OR{FT} <: Node
-    head::Vec{FT}
-    up::Vec{FT}
-    arm::Vec{FT}
+struct OR{FT} <: PG.Node
+    head::PGP.Vec{FT}
+    up::PGP.Vec{FT}
+    arm::PGP.Vec{FT}
 end
 feed!(turtle::Turtle, node::OR, data = nothing) =
     or!(turtle, head = node.head, up = node.up, arm = node.arm)
@@ -94,14 +94,14 @@ julia> set!(turtle, to = O(), head = Y(), up = Z(), arm = X());
 """
 function set!(
     turtle::Turtle{FT,UT};
-    to::Vec{FT} = O(FT),
-    head::Vec{FT} = Z(FT),
-    up::Vec{FT} = X(FT),
-    arm::Vec{FT} = Y(FT),
+    to::PGP.Vec{FT} = PGP.O(FT),
+    head::PGP.Vec{FT} = PGP.Z(FT),
+    up::PGP.Vec{FT} = PGP.X(FT),
+    arm::PGP.Vec{FT} = PGP.Y(FT),
 ) where {FT,UT}
-    @assert norm(head) ≈ one(FT)
-    @assert norm(up) ≈ one(FT)
-    @assert norm(arm) ≈ one(FT)
+    @assert L.norm(head) ≈ one(FT)
+    @assert L.norm(up) ≈ one(FT)
+    @assert L.norm(arm) ≈ one(FT)
     update!(turtle, head = head, up = up, arm = arm, to = to)
 end
 
@@ -110,11 +110,11 @@ end
 
 Node that sets the position and orientation of a turtle.
 """
-Base.@kwdef struct SET{FT} <: Node
-    to::Vec{FT}
-    head::Vec{FT}
-    up::Vec{FT}
-    arm::Vec{FT}
+Base.@kwdef struct SET{FT} <: PG.Node
+    to::PGP.Vec{FT}
+    head::PGP.Vec{FT}
+    up::PGP.Vec{FT}
+    arm::PGP.Vec{FT}
 end
 feed!(turtle::Turtle, node::SET, data = nothing) =
     set!(turtle, to = node.to, head = node.head, up = node.up, arm = node.arm)
@@ -138,8 +138,8 @@ function ru!(turtle::Turtle{FT,UT}, angle::FT) where {FT,UT}
     angle *= FT(pi) / FT(180)
     c = cos(angle)
     s = sin(angle)
-    h = normalize(head(turtle) .* c .+ arm(turtle) .* s)
-    a = normalize(h × up(turtle))
+    h = L.normalize(head(turtle) .* c .+ arm(turtle) .* s)
+    a = L.normalize(L.cross(h, up(turtle)))
     update!(turtle, head = h, arm = a, to = pos(turtle), up = up(turtle))
 end
 
@@ -149,7 +149,7 @@ end
 Node that rotates a turtle around up axis. Angle must be in hexadecimal degrees
 and the rotation is clockwise.
 """
-struct RU{FT} <: Node
+struct RU{FT} <: PG.Node
     angle::FT
 end
 feed!(turtle::Turtle, node::RU, data = nothing) = ru!(turtle, node.angle)
@@ -173,8 +173,8 @@ function ra!(turtle::Turtle{FT,UT}, angle::FT) where {FT,UT}
     angle *= FT(pi) / FT(180)
     c = cos(angle)
     s = sin(angle)
-    u = normalize(up(turtle) .* c .+ head(turtle) .* s)
-    h = normalize(u × arm(turtle))
+    u = L.normalize(up(turtle) .* c .+ head(turtle) .* s)
+    h = L.normalize(L.cross(u, arm(turtle)))
     update!(turtle, head = h, up = u, to = pos(turtle), arm = arm(turtle))
 end
 
@@ -184,7 +184,7 @@ end
 Node that rotates a turtle around arm axis. Angle must be in hexadecimal degrees
 and the rotation is clockwise.
 """
-struct RA{FT} <: Node
+struct RA{FT} <: PG.Node
     angle::FT
 end
 feed!(turtle::Turtle, node::RA, data = nothing) = ra!(turtle, node.angle)
@@ -208,8 +208,8 @@ function rh!(turtle::Turtle{FT,UT}, angle::FT) where {FT,UT}
     angle *= FT(pi) / FT(180)
     c = cos(angle)
     s = sin(angle)
-    u = normalize(up(turtle) .* c .+ arm(turtle) .* s)
-    a = normalize(head(turtle) × u)
+    u = L.normalize(up(turtle) .* c .+ arm(turtle) .* s)
+    a = L.normalize(L.cross(head(turtle), u))
     update!(turtle, arm = a, up = u, to = pos(turtle), head = head(turtle))
 end
 
@@ -219,7 +219,7 @@ end
 Node that rotates a turtle around head axis. Angle must be in hexadecimal
 degrees and the rotation is clockwise.
 """
-struct RH{FT} <: Node
+struct RH{FT} <: PG.Node
     angle::FT
 end
 feed!(turtle::Turtle, node::RH, data = nothing) = rh!(turtle, node.angle)
@@ -248,7 +248,7 @@ end
 
 Moves a turtle forward a given distance.
 """
-struct F{FT} <: Node
+struct F{FT} <: PG.Node
     dist::FT
 end
 feed!(turtle::Turtle, node::F, data = nothing) = f!(turtle, node.dist)
@@ -256,12 +256,12 @@ feed!(turtle::Turtle, node::F, data = nothing) = f!(turtle, node.dist)
 
 # Taken from https://mathworld.wolfram.com/RodriguesRotationFormula.html
 # Returns the matrix for a rotation θ around vector ω
-function rodrigues(ω::Vec{FT}, cosθ::FT, sinθ::FT) where {FT}
+function rodrigues(ω::PGP.Vec{FT}, cosθ::FT, sinθ::FT) where {FT}
     @inbounds begin
         ωx = ω[1]
         ωy = ω[2]
         ωz = ω[3]
-        mat = SMatrix{3,3,FT}(
+        mat = SA.SMatrix{3,3,FT}(
             cosθ + ωx * ωx * (1 - cosθ),     # 1,1
             ωx * ωy * (1 - cosθ) - ωz * sinθ,  # 1,2
             ωy * sinθ + ωx * ωz * (1 - cosθ),  # 1,3
@@ -272,7 +272,7 @@ function rodrigues(ω::Vec{FT}, cosθ::FT, sinθ::FT) where {FT}
             ωx * sinθ + ωy * ωz * (1 - cosθ),  # 3,2
             cosθ + ωz * ωz * (1 - cosθ),      # 3,3
         )
-        LinearMap(mat)
+        CT.LinearMap(mat)
     end
 end
 
@@ -300,17 +300,17 @@ function rv!(turtle::Turtle{FT,UT}, strength::FT) where {FT,UT}
     @inbounds begin
         # Check if head is already vertical
         H = head(turtle)
-        vertical = H ⋅ Z(FT) ≈ one(FT)
+        vertical = L.dot(H, PGP.Z(FT)) ≈ one(FT)
         if vertical
             return nothing
             # If not vertical, then apply rotation
         else
-            nh = norm(head(turtle))
+            nh = L.norm(head(turtle))
             @assert isapprox(nh, one(FT), rtol = sqrt(eps(FT))) "The length of head(turtle) was $(nh)"
             # 1. Create the rotation vector orthogonal to the HZ plane
             #N = strength > FT(0) ? Z(FT) × H : (.-Z(FT)) × H
-            N = Z(FT) × H
-            sinθ₁ = norm(N) # Used below
+            N = L.cross(PGP.Z(FT), H)
+            sinθ₁ = L.norm(N) # Used below
             N = N ./ sinθ₁
             # 2. Compute the cosine and sine of the angle of rotation
             # This is achieved by comparing the cos and sin before and
@@ -328,9 +328,9 @@ function rv!(turtle::Turtle{FT,UT}, strength::FT) where {FT,UT}
             # 3. Create the affine transform with Rodrigues rotation matrix
             trans = rodrigues(N, cosΔθ, sinΔθ)
             # 4. Transform the turtle reference system (does not change norms)
-            nhead = normalize(trans(head(turtle)))
-            narm = normalize(trans(arm(turtle)))
-            nup = normalize(trans(up(turtle)))
+            nhead = L.normalize(trans(head(turtle)))
+            narm = L.normalize(trans(arm(turtle)))
+            nup = L.normalize(trans(up(turtle)))
             # Update the turtle to the new axes
             update!(turtle, to = pos(turtle), head = nhead, arm = narm, up = nup)
         end
@@ -342,7 +342,7 @@ end
 
 Rotates the turtle towards the Z axis. See documentation for `rv!` for details.
 """
-struct RV{FT} <: Node
+struct RV{FT} <: PG.Node
     strength::FT
 end
 feed!(turtle::Turtle, node::RV, data = nothing) = rv!(turtle, node.strength)

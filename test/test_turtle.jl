@@ -9,13 +9,13 @@ let
     # Create turtles with different floating point precisions
     t64 = VT.Turtle(Float64)
     @test t64 isa VT.Turtle{Float64,Nothing}
-    @test VT.pos(t64) isa VT.Vec{Float64}
-    @test VT.geoms(t64) isa VT.Mesh{VT.Vec{Float64}}
+    @test VT.pos(t64) isa VG.Vec{Float64}
+    @test VT.geoms(t64) isa VG.Mesh{VG.Vec{Float64}}
 
     t32 = VT.Turtle(Float32)
     @test t32 isa VT.Turtle{Float32,Nothing}
-    @test VT.pos(t32) isa VT.Vec{Float32}
-    @test VT.geoms(t32) isa VT.Mesh{VT.Vec{Float32}}
+    @test VT.pos(t32) isa VG.Vec{Float32}
+    @test VT.geoms(t32) isa VG.Mesh{VG.Vec{Float32}}
 
 
     # Head -> Z axis
@@ -25,7 +25,7 @@ let
 
     # Translation command
     function test_t(t::VT.Turtle{FT,UT}) where {FT,UT}
-        to = VT.Vec{FT}(1, 1, 1)
+        to = VG.Vec{FT}(1, 1, 1)
         nt = deepcopy(t)
         VT.t!(nt, to = to)
         @test VT.pos(nt) == to
@@ -39,9 +39,9 @@ let
 
     # Orientation command
     function test_or(t::VT.Turtle{FT,UT}) where {FT,UT}
-        arm = normalize(VT.Vec{FT}(0.5, 0.5, 0))
-        head = normalize(VT.Vec{FT}(-0.5, 0.5, 0))
-        up = normalize(VT.Vec{FT}(0, 0, 1))
+        arm = normalize(VG.Vec{FT}(0.5, 0.5, 0))
+        head = normalize(VG.Vec{FT}(-0.5, 0.5, 0))
+        up = normalize(VG.Vec{FT}(0, 0, 1))
         nt = deepcopy(t)
         VT.or!(nt, head = head, arm = arm, up = up)
         @test VT.pos(nt) == VT.pos(t)
@@ -55,10 +55,10 @@ let
 
     # Set command
     function test_set(t::VT.Turtle{FT,UT}) where {FT,UT}
-        to = normalize(VT.Vec{FT}(1, 1, 1))
-        arm = normalize(VT.Vec{FT}(0.5, 0.5, 0))
-        head = normalize(VT.Vec{FT}(-0.5, 0.5, 0))
-        up = VT.Vec{FT}(0, 0, 1)
+        to = normalize(VG.Vec{FT}(1, 1, 1))
+        arm = normalize(VG.Vec{FT}(0.5, 0.5, 0))
+        head = normalize(VG.Vec{FT}(-0.5, 0.5, 0))
+        up = VG.Vec{FT}(0, 0, 1)
         nt = deepcopy(t)
         VT.set!(nt, to = to, head = head, arm = arm, up = up)
         @test VT.pos(nt) == to
@@ -75,8 +75,8 @@ let
         nt = deepcopy(t)
         VT.ru!(nt, FT(90))
         @test VT.pos(nt) == VT.pos(t)
-        @test VT.head(nt) ≈ VT.Y(FT)
-        @test VT.arm(nt) ≈ .-VT.Z(FT)
+        @test VT.head(nt) ≈ VG.Y(FT)
+        @test VT.arm(nt) ≈ .-VG.Z(FT)
         @test VT.up(nt) == VT.up(t)
     end
 
@@ -87,8 +87,8 @@ let
         nt = deepcopy(t)
         VT.ru!(nt, FT(180))
         @test VT.pos(nt) == VT.pos(t)
-        @test VT.head(nt) ≈ .-VT.Z(FT)
-        @test VT.arm(nt) ≈ .-VT.Y(FT)
+        @test VT.head(nt) ≈ .-VG.Z(FT)
+        @test VT.arm(nt) ≈ .-VG.Y(FT)
         @test VT.up(nt) == VT.up(t)
     end
 
@@ -100,9 +100,9 @@ let
         nt = deepcopy(t)
         VT.ra!(nt, angle)
         @test VT.pos(nt) == VT.pos(t)
-        @test VT.head(nt) ≈ .-VT.X(FT)
+        @test VT.head(nt) ≈ .-VG.X(FT)
         @test VT.arm(nt) == VT.arm(t)
-        @test VT.up(nt) ≈ VT.Z(FT)
+        @test VT.up(nt) ≈ VG.Z(FT)
     end
 
     test_ra(VT.Turtle(Float64), 90.0)
@@ -114,8 +114,8 @@ let
         VT.rh!(nt, angle)
         @test VT.pos(nt) == VT.pos(t)
         @test VT.head(nt) == VT.head(t)
-        @test VT.arm(nt) ≈ .-VT.X(FT)
-        @test VT.up(nt) ≈ VT.Y(FT)
+        @test VT.arm(nt) ≈ .-VG.X(FT)
+        @test VT.up(nt) ≈ VG.Y(FT)
     end
 
     test_rh(VT.Turtle(Float64), 90.0)
@@ -126,7 +126,7 @@ let
     function test_f(t::VT.Turtle{FT,UT}, dist::FT) where {FT,UT}
         nt = deepcopy(t)
         VT.f!(nt, dist)
-        @test VT.pos(nt) == VT.Vec{FT}(0, 0, 1)
+        @test VT.pos(nt) == VG.Vec{FT}(0, 0, 1)
         @test VT.head(nt) == VT.head(t)
         @test VT.arm(nt) == VT.arm(t)
         @test VT.up(nt) == VT.up(t)
@@ -138,13 +138,13 @@ let
     # Check transformations
     trans = VT.transformation(VT.Turtle(Float64))
     @test trans isa CT.AffineMap
-    trans.translation == VT.Vec{Float64}(0, 0, 0)
+    trans.translation == VG.Vec{Float64}(0, 0, 0)
     trans.linear == CT.SDiagonal(1.0, 1.0, 1.0)
 
 
-    trans = VT.transformation(VT.Turtle(Float64), (2.0, 2.0, 2.0))
+    trans = VT.transformation(VT.Turtle(Float64), VG.Vec(2.0, 2.0, 2.0))
     @test trans isa CT.AffineMap
-    trans.translation == VT.Vec{Float64}(0, 0, 0)
+    trans.translation == VG.Vec{Float64}(0, 0, 0)
     trans.linear == CT.SDiagonal(2.0, 2.0, 2.0)
 
 

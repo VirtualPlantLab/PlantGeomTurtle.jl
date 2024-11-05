@@ -16,14 +16,8 @@ Generate an ellipse in front of a turtle and feed it to a turtle.
 - `width`: Width of the ellipse.
 - `n`: Number of triangles of the mesh approximating the ellipse (an integer).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A triangle mesh will be generated with `n` triangles that approximates an ellipse.
@@ -48,7 +42,7 @@ julia> turtle = Turtle();
 julia> Ellipse!(turtle; length = 1.0, width = 0.5, n = 40);
 ```
 """
-function Ellipse!(
+function PGP.Ellipse!(
                 turtle::Turtle{FT,UT};
                 length = one(FT),
                 width = one(FT),
@@ -57,8 +51,8 @@ function Ellipse!(
                 materials = nothing,
                 colors = nothing) where {FT,UT}
     # Generate the ellipse and add it to the turtle
-    trans = transformation(turtle, (one(FT), width / FT(2), length / FT(2)))
-    Ellipse!(geoms(turtle), trans; n = n)
+    trans = transformation(turtle, PGP.Vec(one(FT), width / FT(2), length / FT(2)))
+    PGP.Ellipse!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
@@ -98,11 +92,11 @@ julia> turtle = Turtle();
 julia> e = Ellipse(turtle; length = 1.0, width = 0.5, n = 40);
 ```
 """
-function Ellipse(turtle::Turtle{FT,UT}; length = one(FT), width = one(FT), n = 20,
+function PGP.Ellipse(turtle::Turtle{FT,UT}; length = one(FT), width = one(FT), n = 20,
                  move = false) where {FT,UT}
     # Generate the ellipse and return it
-    trans = transformation(turtle, (one(FT), width / FT(2), length / FT(2)))
-    m = Ellipse(trans; n = n)
+    trans = transformation(turtle, PGP.Vec(one(FT), width / FT(2), length / FT(2)))
+    m = PGP.Ellipse(trans; n = n)
     move && f!(turtle, length)
     return m
 end
@@ -119,14 +113,8 @@ Generate a triangle in front of the turtle and feed it to a turtle.
 - `length`: Length of the triangle.
 - `width`: Width of the triangle.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A triangle mesh will be generated representing the triangle.
@@ -151,15 +139,15 @@ julia> turtle = Turtle();
 julia> Triangle!(turtle; length = 2.0, width = 1.0);
 ```
 """
-function Triangle!(
+function PGP.Triangle!(
                 turtle::Turtle{FT,UT};
                 length::FT = one(FT),
                 width::FT = one(FT),
                 move = false,
                 materials = nothing,
                 colors = nothing) where {FT,UT}
-    trans = transformation(turtle, (one(FT), width / FT(2), length))
-    Triangle!(geoms(turtle), trans)
+    trans = transformation(turtle, PGP.Vec(one(FT), width / FT(2), length))
+    PGP.Triangle!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
     nt = 1
@@ -199,10 +187,10 @@ julia> turtle = Turtle();
 julia> t = Triangle(turtle; length = 2.0, width = 1.0);
 ```
 """
-function Triangle(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.Triangle(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                   move = false) where {FT,UT}
-    trans = transformation(turtle, (one(FT), width / FT(2), length))
-    t = Triangle(trans)
+    trans = transformation(turtle, PGP.Vec(one(FT), width / FT(2), length))
+    t = PGP.Triangle(trans)
     move && f!(turtle, length)
     return t
 end
@@ -218,14 +206,8 @@ Generate a rectangle in front of the turtle and feed it to a turtle.
 - `length`: Length of the rectangle.
 - `width`: Width of the rectangle.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A triangle mesh will be generated representing the rectangle.
@@ -250,15 +232,15 @@ julia> turtle = Turtle();
 julia> Rectangle!(turtle; length = 1.0, width = 0.5);
 ```
 """
-function Rectangle!(
+function PGP.Rectangle!(
                     turtle::Turtle{FT,UT};
                     length::FT = one(FT),
                     width::FT = one(FT),
                     move = false,
                     materials = nothing,
                     colors = nothing) where {FT,UT}
-    trans = transformation(turtle, (one(FT), width / FT(2), length))
-    Rectangle!(geoms(turtle), trans)
+    trans = transformation(turtle, PGP.Vec(one(FT), width / FT(2), length))
+    PGP.Rectangle!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
     nt = 2
@@ -298,17 +280,17 @@ julia> turtle = Turtle();
 julia> r = Rectangle(turtle; length = 2.0, width = 1.0);
 ```
 """
-function Rectangle(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.Rectangle(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                   move = false) where {FT,UT}
-    trans = transformation(turtle, (one(FT), width / FT(2), length))
-    t = Rectangle(trans)
+    trans = transformation(turtle, PGP.Vec(one(FT), width / FT(2), length))
+    t = PGP.Rectangle(trans)
     move && f!(turtle, length)
     return t
 end
 
 """
     Trapezoid!(turtle; length = 1.0, width = 1.0, ratio = 1.0, move = false,
-    colors = nothing, materials = nothing)
+               colors = nothing, materials = nothing)
 
 Generate a trapezoid in front of the turtle and feed it to a turtle.
 
@@ -318,14 +300,8 @@ Generate a trapezoid in front of the turtle and feed it to a turtle.
 - `width`: Width of the base of the trapezoid.
 - `ratio`: Ratio between the width of the top and base of the trapezoid.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A triangle mesh will be generated representing the trapezoid.
@@ -350,7 +326,7 @@ julia> turtle = Turtle();
 julia> Trapezoid!(turtle; length = 1.0, width = 1.0, ratio = 0.5);
 ```
 """
-function Trapezoid!(
+function PGP.Trapezoid!(
                     turtle::Turtle{FT,UT};
                     length::FT = one(FT),
                     width::FT = one(FT),
@@ -358,8 +334,8 @@ function Trapezoid!(
                     move = false,
                     materials = nothing,
                     colors = nothing) where {FT,UT}
-    trans = transformation(turtle, (one(FT), width / FT(2), length))
-    Trapezoid!(geoms(turtle), trans, ratio)
+    trans = transformation(turtle, PGP.Vec(one(FT), width / FT(2), length))
+    PGP.Trapezoid!(geoms(turtle), trans, ratio)
     move && f!(turtle, length)
     # Materials and colors
     nt = 2
@@ -400,10 +376,10 @@ julia> turtle = Turtle();
 julia> t = Trapezoid(turtle; length = 1.0, width = 1.0, ratio = 0.5);
 ```
 """
-function Trapezoid(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.Trapezoid(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                    ratio::FT = one(FT), move = false) where {FT,UT}
-    trans = transformation(turtle, (one(FT), width / FT(2), length))
-    t = Trapezoid(trans, ratio)
+    trans = transformation(turtle, PGP.Vec(one(FT), width / FT(2), length))
+    t = PGP.Trapezoid(trans, ratio)
     move && f!(turtle, length)
     return t
 end
@@ -421,14 +397,8 @@ Generate a hollow cone in front of the turtle and feed it to a turtle.
 - `height`: Height of the hollow cone.
 - `n`: Number of triangles in the mesh.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the hollow cone.
@@ -453,7 +423,7 @@ julia> turtle = Turtle();
 julia> HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0);
 ```
 """
-function HollowCone!(
+function PGP.HollowCone!(
                     turtle::Turtle{FT,UT};
                     length::FT = one(FT),
                     width::FT = one(FT),
@@ -462,8 +432,8 @@ function HollowCone!(
                     move = false,
                     materials = nothing,
                     colors = nothing) where {FT,UT}
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    HollowCone!(geoms(turtle), trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    PGP.HollowCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
@@ -504,10 +474,10 @@ julia> turtle = Turtle();
 julia> HollowCone!(turtle; length = 1.0, width = 1.0, height = 1.0);
 ```
 """
-function HollowCone(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.HollowCone(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                     height::FT = one(FT), n::Int = 20, move = false) where {FT,UT}
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    c = HollowCone(trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    c = PGP.HollowCone(trans; n = n)
     move && f!(turtle, length)
     return c
 end
@@ -524,14 +494,8 @@ Generate a hollow cube in front of the turtle and feed it to a turtle.
 - `width`: Width of the rectangle at the base of the hollow cube.
 - `height`: Height of the hollow cube.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated of a hollow cube.
@@ -556,7 +520,7 @@ julia> turtle = Turtle();
 julia> HollowCube!(turtle; length = 1.0, width = 1.0, height = 2.0);
 ```
 """
-function HollowCube!(
+function PGP.HollowCube!(
                     turtle::Turtle{FT,UT};
                     length::FT = one(FT),
                     width::FT = one(FT),
@@ -564,8 +528,8 @@ function HollowCube!(
                     move = false,
                     materials = nothing,
                     colors = nothing) where {FT,UT}
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    HollowCube!(geoms(turtle), trans)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    PGP.HollowCube!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
     nt = 8
@@ -606,10 +570,10 @@ julia> turtle = Turtle();
 julia> c = HollowCube(turtle; length = 1.0, width = 1.0, height = 2.0);
 ```
 """
-function HollowCube(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.HollowCube(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                     height::FT = one(FT), move = false) where {FT,UT}
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    c = HollowCube(trans)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    c = PGP.HollowCube(trans)
     move && f!(turtle, length)
     return c
 end
@@ -627,14 +591,8 @@ Generate a hollow cylinder in front of the turtle and feed it to a turtle.
 - `height`: Height of the hollow cylinder.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the hollow cylinder.
@@ -659,7 +617,7 @@ julia> turtle = Turtle();
 julia> HollowCylinder!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
-function HollowCylinder!(
+function PGP.HollowCylinder!(
                     turtle::Turtle{FT,UT};
                     length::FT = one(FT),
                     width::FT = one(FT),
@@ -669,8 +627,8 @@ function HollowCylinder!(
                     materials = nothing,
                     colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    HollowCylinder!(geoms(turtle), trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    PGP.HollowCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
@@ -712,11 +670,11 @@ julia> turtle = Turtle();
 julia> c = HollowCylinder(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
-function HollowCylinder(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.HollowCylinder(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                          height::FT = one(FT), n::Int = 40, move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    c = HollowCylinder(trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    c = PGP.HollowCylinder(trans; n = n)
     move && f!(turtle, length)
     return c
 end
@@ -735,14 +693,8 @@ Generate a hollow frustum in front of the turtle and feed it to a turtle.
 - `height`: Height of the hollow frustum.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the hollow frustum.
@@ -767,7 +719,7 @@ julia> turtle = Turtle();
 julia> HollowFrustum!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
-function HollowFrustum!(
+function PGP.HollowFrustum!(
                     turtle::Turtle{FT,UT};
                     length::FT = one(FT),
                     width::FT = one(FT),
@@ -778,8 +730,8 @@ function HollowFrustum!(
                     materials = nothing,
                     colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    HollowFrustum!(geoms(turtle), ratio, trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    PGP.HollowFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
@@ -821,12 +773,12 @@ julia> turtle = Turtle();
 julia> f = HollowFrustum(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
-function HollowFrustum(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.HollowFrustum(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                         height::FT = one(FT), ratio::FT = one(FT), n::Int = 40,
                         move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    f = HollowFrustum(ratio, trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    f = PGP.HollowFrustum(ratio, trans; n = n)
     move && f!(turtle, length)
     return f
 end
@@ -844,14 +796,8 @@ Generate a solid frustum in front of the turtle and feed it to a turtle.
 - `height`: Height of the solid cone.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the solid cone.
@@ -876,7 +822,7 @@ julia> turtle = Turtle();
 julia> SolidCone!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
-function SolidCone!(
+function PGP.SolidCone!(
                 turtle::Turtle{FT,UT};
                 length::FT = one(FT),
                 width::FT = one(FT),
@@ -886,8 +832,8 @@ function SolidCone!(
                 materials = nothing,
                 colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    SolidCone!(geoms(turtle), trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    PGP.SolidCone!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
@@ -929,11 +875,11 @@ julia> turtle = Turtle();
 julia> c = SolidCone(turtle; length = 1.0, width = 1.0, height = 2.0, n = 40);
 ```
 """
-function SolidCone(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.SolidCone(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                     height::FT = one(FT), n::Int = 40, move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    c = SolidCone(trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    c = PGP.SolidCone(trans; n = n)
     move && f!(turtle, length)
     return c
 end
@@ -950,14 +896,8 @@ Generate a solid cube in front of the turtle and feed it to a turtle.
 - `width`: Width of the rectangle at the base of the solid cube.
 - `height`: Height of the solid cube.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated of a solid cube.
@@ -982,7 +922,7 @@ julia> turtle = Turtle();
 julia> SolidCube!(turtle; length = 1.0, width = 1.0, height = 2.0);
 ```
 """
-function SolidCube!(
+function PGP.SolidCube!(
                 turtle::Turtle{FT,UT};
                 length::FT = one(FT),
                 width::FT = one(FT),
@@ -990,8 +930,8 @@ function SolidCube!(
                 move = false,
                 materials = nothing,
                 colors = nothing) where {FT,UT}
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    SolidCube!(geoms(turtle), trans)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    PGP.SolidCube!(geoms(turtle), trans)
     move && f!(turtle, length)
     # Materials and colors
     nt = 12
@@ -1032,10 +972,10 @@ julia> turtle = Turtle();
 julia> c = SolidCube(turtle; length = 1.0, width = 1.0, height = 2.0);
 ```
 """
-function SolidCube(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.SolidCube(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                    height::FT = one(FT), move = false) where {FT,UT}
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    c = SolidCube(trans)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    c = PGP.SolidCube(trans)
     move && f!(turtle, length)
     return c
 end
@@ -1053,14 +993,8 @@ Generate a solid cylinder in front of the turtle and feed it to a turtle.
 - `height`: Height of the solid cylinder.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the solid cylinder.
@@ -1085,7 +1019,7 @@ julia> turtle = Turtle();
 julia> SolidCylinder!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80);
 ```
 """
-function SolidCylinder!(
+function PGP.SolidCylinder!(
                     turtle::Turtle{FT,UT};
                     length::FT = one(FT),
                     width::FT = one(FT),
@@ -1095,8 +1029,8 @@ function SolidCylinder!(
                     materials = nothing,
                     colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    SolidCylinder!(geoms(turtle), trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    PGP.SolidCylinder!(geoms(turtle), trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
@@ -1138,11 +1072,11 @@ julia> turtle = Turtle();
 julia> c = SolidCylinder(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80);
 ```
 """
-function SolidCylinder(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.SolidCylinder(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                         height::FT = one(FT), n::Int = 80, move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    c = SolidCylinder(trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    c = PGP.SolidCylinder(trans; n = n)
     move && f!(turtle, length)
     return c
 end
@@ -1160,14 +1094,8 @@ Generate a solid frustum in front of the turtle and feed it to a turtle.
 - `height`: Height of the solid frustum.
 - `n`: Number of triangles in the mesh (must be even).
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
 
 ## Details
 A mesh will be generated with n triangles that approximate the solid frustum.
@@ -1192,7 +1120,7 @@ julia> turtle = Turtle();
 julia> SolidFrustum!(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80);
 ```
 """
-function SolidFrustum!(
+function PGP.SolidFrustum!(
                 turtle::Turtle{FT,UT};
                 length::FT = one(FT),
                 width::FT = one(FT),
@@ -1203,8 +1131,8 @@ function SolidFrustum!(
                 materials = nothing,
                 colors = nothing) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    SolidFrustum!(geoms(turtle), ratio, trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    PGP.SolidFrustum!(geoms(turtle), ratio, trans; n = n)
     move && f!(turtle, length)
     # Materials and colors
     nt = n
@@ -1246,12 +1174,12 @@ julia> turtle = Turtle();
 julia> f = SolidFrustum(turtle; length = 1.0, width = 1.0, height = 2.0, n = 80);
 ```
 """
-function SolidFrustum(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+function PGP.SolidFrustum(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
                       height::FT = one(FT), ratio::FT = one(FT), n::Int = 80,
                       move = false) where {FT,UT}
     @assert iseven(n)
-    trans = transformation(turtle, (height / FT(2), width / FT(2), length))
-    f = SolidFrustum(ratio, trans; n = n)
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length))
+    f = PGP.SolidFrustum(ratio, trans; n = n)
     move && f!(turtle, length)
     return f
 end
@@ -1293,16 +1221,9 @@ Feed a pre-existing mesh to a turtle (with optional transformation).
 - `m`: The pre-existing unscaled mesh in standard position and orientation.
 - `scale`: Vector with scaling factors for the x, y and z axes.
 - `move`: Whether to move the turtle forward or not (`true` or `false`).
-- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There
-should be one color per triangle in the mesh or a single color (such that all triangles get
-the same color). This is an optional argument, but if no colors are provided, it the
-resulting scene cannot be visualized (the function `rennder()` will throw an error).
-- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should
-be one material per triangle in the mesh or a single material (such that all triangles get the
-same material). This is an optional argument, but if no materials are provided, the resulting
-scene cannot be used for ray tracing.
-- `transform`: Whether to to transform the mesh according to the turtle's position and
-orientation the scaling vector provided by the user.
+- `colors`: A vector of colors (any type that inherits from `ColorTypes.Colorant`). There should be one color per triangle in the mesh or a single color (such that all triangles get the same color). This is an optional argument, but if no colors are provided, it the resulting scene cannot be visualized (the function `rennder()` will throw an error).
+- `materials`: A vector of materials (object of type `PlantRayTracer.Material`). There should be one material per triangle in the mesh or a single material (such that all triangles get the same material). This is an optional argument, but if no materials are provided, the resulting scene cannot be used for ray tracing.
+- `transform`: Whether to to transform the mesh according to the turtle's position and orientation the scaling vector provided by the user.
 - `deepcopy`: Whether to make a deep copy of the mesh before feeding it to the turtle.
 
 ## Details
@@ -1346,8 +1267,8 @@ julia> Mesh!(turtle, e, scale = PG.Vec(2.0, 2.0, 2.0));
 """
 function Mesh!(
             turtle::Turtle{FT,UT},
-            m::PG.Mesh;
-            scale::Vec{FT} = Vec{FT}(1.0, 1.0, 1.0),
+            m::PGP.Mesh;
+            scale::PGP.Vec{FT} = PGP.Vec{FT}(1.0, 1.0, 1.0),
             move = false,
             materials = nothing,
             colors = nothing,
@@ -1362,15 +1283,15 @@ function Mesh!(
     # Optionally apply transformation to mesh
     if transform
         trans = transformation(turtle::Turtle, scale)
-        PG.transform!(mnew, trans)
+        PGP.transform!(mnew, trans)
     end
     # Feed the mesh onto the turtle
-    append!(vertices(geoms(turtle)), vertices(mnew))
-    append!(normals(geoms(turtle)), normals(mnew))
+    append!(PGP.vertices(geoms(turtle)), PGP.vertices(mnew))
+    append!(PGP.normals(geoms(turtle)), PGP.normals(mnew))
     move && f!(turtle, length)
     # Materials and colors
-    update_material!(turtle, materials, ntriangles(mnew))
-    update_color!(turtle, colors, ntriangles(mnew))
+    update_material!(turtle, materials, PGP.ntriangles(mnew))
+    update_color!(turtle, colors, PGP.ntriangles(mnew))
     return nothing
 end
 
@@ -1408,12 +1329,12 @@ julia> turtle = Turtle();
 julia> ne = Mesh!(turtle, e, scale = PG.Vec(2.0, 2.0, 2.0));
 ```
 """
-function Mesh(turtle::Turtle{FT,UT}, m::PG.Mesh; scale::Vec{FT} = Vec{FT}(1.0, 1.0, 1.0),
-              move = false) where {FT,UT}
+function PGP.Mesh(turtle::Turtle{FT,UT}, m::PGP.Mesh;
+                 scale::PGP.Vec{FT} = PGP.Vec{FT}(1.0, 1.0, 1.0), move = false) where {FT,UT}
     # Transform the mesh
     trans = transformation(turtle::Turtle, scale)
     mnew = Base.deepcopy(m)
-    PG.transform!(mnew, trans)
+    PGP.transform!(mnew, trans)
     move && f!(turtle, length)
     return mnew
 end
