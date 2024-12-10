@@ -1,6 +1,7 @@
 using Test
 import Aqua
 import PlantGeomTurtle
+import PlantGeomPrimitives as PGP
 using Documenter
 
 # Test examples on documentation (jldoctest blocks)
@@ -19,6 +20,9 @@ doctest(PlantGeomTurtle)
     Aqua.test_ambiguities([PlantGeomTurtle])
 end
 
+# To help access colors
+get_colors(t::PlantGeomTurtle.Turtle) = PGP.properties(PGP.Mesh(t))[:colors]
+
 # Turtle geometry
 @testset "Turtle" begin
     include("test_turtle.jl")
@@ -28,13 +32,6 @@ end
 end
 
 # Direct meshing
-module MatType
-    using PlantGeomPrimitives
-    struct Mat <: Material end
-end
-
-import .MatType: Mat
-
 @testset "ellipse" begin
     include("test_ellipse.jl")
 end
