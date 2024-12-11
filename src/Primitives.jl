@@ -44,7 +44,7 @@ function PGP.Ellipse!(turtle::Turtle{FT,UT}; length = one(FT), width = one(FT),
     # Set properties per triangle
     for (k, v) in kwargs
         @show k, v
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, n)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -130,7 +130,7 @@ function PGP.Triangle!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = 
     PGP.Triangle!(PGP.Mesh(turtle), trans)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, 1)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -214,7 +214,7 @@ function PGP.Rectangle!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT =
     PGP.Rectangle!(PGP.Mesh(turtle), trans)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, 2)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -299,7 +299,7 @@ function PGP.Trapezoid!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT =
     PGP.Trapezoid!(PGP.Mesh(turtle), trans, ratio)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, 2)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -386,7 +386,7 @@ function PGP.HollowCone!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT 
     PGP.HollowCone!(PGP.Mesh(turtle), trans; n = n)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, n)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -472,7 +472,7 @@ function PGP.HollowCube!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT 
     PGP.HollowCube!(PGP.Mesh(turtle), trans)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, 8)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -564,7 +564,7 @@ function PGP.HollowCylinder!(turtle::Turtle{FT,UT}; length::FT = one(FT), width:
     PGP.HollowCylinder!(PGP.Mesh(turtle), trans; n = n)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, n)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -656,7 +656,7 @@ function PGP.HollowFrustum!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::
     PGP.HollowFrustum!(PGP.Mesh(turtle), ratio, trans; n = n)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, n)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -747,7 +747,7 @@ function PGP.SolidCone!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT =
     PGP.SolidCone!(PGP.Mesh(turtle), trans; n = n)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, n)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -835,7 +835,7 @@ function PGP.SolidCube!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT =
     PGP.SolidCube!(PGP.Mesh(turtle), trans)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, 12)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -923,7 +923,7 @@ function PGP.SolidCylinder!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::
     PGP.SolidCylinder!(PGP.Mesh(turtle), trans; n = n)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, n)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -1014,7 +1014,7 @@ function PGP.SolidFrustum!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::F
     PGP.SolidFrustum!(PGP.Mesh(turtle), ratio, trans; n = n)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, n)
     end
     # Move the turtle if needed
     move && f!(turtle, length)
@@ -1149,7 +1149,7 @@ function Mesh!(turtle::Turtle{FT,UT}, m::PGP.Mesh; scale::PGP.Vec{FT} = PGP.Vec{
     move && f!(turtle, length)
     # Set properties per triangle
     for (k, v) in kwargs
-        PGP.add_property!(PGP.Mesh(turtle), k, v)
+        PGP.add_property!(PGP.Mesh(turtle), k, v, PGP.ntriangles(mnew))
     end
     return nothing
 end
