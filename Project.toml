@@ -1,7 +1,7 @@
 name = "PlantGeomTurtle"
 uuid = "7d6e2781-1c99-4c66-97ec-106669f3e96e"
 authors = ["Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors"]
-version = "0.0.5"
+version = "0.0.6"
 
 [deps]
 CoordinateTransformations = "150eb455-5306-5404-9cee-2592286d6298"
@@ -15,7 +15,7 @@ Unrolled = "9602ed7d-8fef-5bc8-8597-8f21381861e8"
 [compat]
 CoordinateTransformations = "0.6.3"
 LinearAlgebra = "1.11"
-PlantGeomPrimitives = "0.0.4"
+PlantGeomPrimitives = "0.0.5"
 PlantGraphs = "0.0.3"
 Rotations = "1.5.1"
 StaticArrays = "1.5.26"
