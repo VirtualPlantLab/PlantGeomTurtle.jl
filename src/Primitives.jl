@@ -43,7 +43,6 @@ function PGP.Ellipse!(turtle::Turtle{FT,UT}; length = one(FT), width = one(FT),
     PGP.Ellipse!(PGP.Mesh(turtle), trans; n = n)
     # Set properties per triangle
     for (k, v) in kwargs
-        @show k, v
         PGP.add_property!(PGP.Mesh(turtle), k, v, n)
     end
     # Move the turtle if needed
