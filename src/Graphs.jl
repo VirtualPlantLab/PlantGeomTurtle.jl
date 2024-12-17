@@ -1,22 +1,21 @@
 ### This file contains public API ###
+### feed!
+### Mesh!
 
 """
-    feed!(turtle::Turtle; mesh::Mesh, color::Colorant = nothing, mat::Material = nothing)
+    feed!(turtle::Turtle; mesh::Mesh; kwargs...)
 
 General purpose method to feed a mesh to a turtle together with color and
 material. Note that all primitives provided by VPL are implemented as meshes,
 but this is a generic method for meshes that are constructed directly by the
 user or imported from external software.
 """
-function feed!(
-    turtle::Turtle;
-    mesh::PGP.Mesh,
-    color::ColorTypes.Colorant = nothing,
-    material::PGP.Material = nothing,
-)
-    push!(geoms(turtle), mesh)
-    update_material!(turtle, material, PGP.ntriangles(mesh))
-    update_color!(turtle, color, PGP.nvertices(mesh))
+function feed!(turtle::Turtle; mesh::PGP.Mesh, kwargs...)
+    append!(PGP.vertices(PGP.Mesh(turtle)), PGP.vertices(mesh))
+    for (k, v) in kwargs
+        PGP.add_property!(PGP.Mesh(turtle), k, v)
+    end
+    return nothing
 end
 
 """
@@ -59,12 +58,10 @@ function feed!(turtle::Turtle, g::PG.Graph)
                     push!(
                         nodeStack,
                         PG.GraphNode(
-                            SET(
-                                to = pos(turtle),
+                            SET(to = pos(turtle),
                                 head = head(turtle),
                                 up = up(turtle),
-                                arm = arm(turtle),
-                            ),
+                                arm = arm(turtle)),
                         ),
                     )
                     push!(nodeStack, child)
@@ -94,4 +91,43 @@ function feed!(turtle::Turtle, collection::AbstractArray)
         feed!(turtle, el)
     end
     return nothing
+end
+
+
+"""
+    Mesh(graph, Float64)
+
+Create a mesh from a `Graph` object (`g`). By default, double
+floating precision will be used (`Float64`) but it is possible to generate a
+version with a different precision by specifying the corresponding type as in
+`Scene(g, Float32)`.
+"""
+function PGP.Mesh(graph::PG.Graph, ::Type{FT} = Float64; message = nothing) where {FT}
+    turtle = Turtle(FT, message)
+    feed!(turtle, graph)
+    PGP.Mesh(turtle)
+end
+
+"""
+    Mesh(graphs, Float64; parallel = false, message = nothing)
+
+Create a mesh for rendering from an array of `Graph` objects (`graphs`).
+The graphs may be processed serially (default) or in parallel using
+multithreading (`parallel = true`). By default, double floating precision will
+be used (`Float64`) but it is possible to generate a version with a different
+precision by specifying the corresponding type as in `Mesh(graphs, Float32)`.
+"""
+function PGP.Mesh(graphs::Vector{<:PG.Graph}, ::Type{FT} = Float64; parallel = false,
+                  message = nothing) where {FT}
+    meshes = Vector{PGP.Mesh}(undef, length(graphs))
+    if parallel
+        Threads.@threads for i in eachindex(graphs)
+            @inbounds meshes[i] = PGP.Mesh(graphs[i], FT, message = message)
+        end
+    else
+        for i in eachindex(graphs)
+            @inbounds meshes[i] = PGP.Mesh(graphs[i], FT, message = message)
+        end
+    end
+    PGP.Mesh(meshes)
 end

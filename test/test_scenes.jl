@@ -73,8 +73,8 @@ let
     end
     rule = Rule(sn.E64, rhs = Kochsnowflake)
     Koch = Graph(axiom = axiom, rules = Tuple(rule))
-    scene = Scene(Koch);
+    scene = Mesh(Koch);
 
-    scene = Scene([Koch, Koch])
+    scene = Mesh([Koch, Koch])
 
 end

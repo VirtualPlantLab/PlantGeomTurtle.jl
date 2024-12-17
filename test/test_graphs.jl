@@ -25,7 +25,7 @@ function PlantGeomTurtle.feed!(t::Turtle, n::NT.Plate, data)
 end
 axiom = NT.Plate(2.0, 2.0)
 graph = Graph(axiom = axiom)
-mesh = G.Scene(graph).mesh
+mesh = G.Mesh(graph)
 r = G.Rectangle(length = 2.0, width = 2.0)
 @test mesh == r
 
@@ -36,7 +36,7 @@ end
 COORDS = Turtle().coords
 axiom = NT.Point() + (RU(60.0) + NT.Plate(2.0, 2.0), NT.Point())
 graph = Graph(axiom = axiom)
-G.Scene(graph)
+G.Mesh(graph)
 
 # Test turtle nodes - Rotations
 function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
@@ -48,7 +48,7 @@ function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
 end
 axiom = OR(Z(), Y(), X()) + RU(90.0) + RH(90.0) + RA(90.0) + F(1.0) + NT.Point()
 graph = Graph(axiom = axiom)
-G.Scene(graph);
+G.Mesh(graph);
 
 # Test turtle nodes - Translation
 function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
@@ -59,7 +59,7 @@ function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
 end
 axiom = RU(90.0) + F(1.0) + T(O()) + NT.Point()
 graph = Graph(axiom = axiom)
-G.Scene(graph);
+G.Mesh(graph);
 
 # Test turtle nodes - Gravitropism (one of the examples from test_gravitrpism.jl)
 function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
@@ -80,6 +80,6 @@ function PlantGeomTurtle.feed!(t::Turtle, n::NT.Point, data)
 end
 axiom = RV(0.5) + NT.Point()
 graph = Graph(axiom = axiom)
-G.Scene(graph);
+G.Mesh(graph);
 
 end

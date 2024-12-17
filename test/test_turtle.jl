@@ -10,12 +10,12 @@ let
     t64 = VT.Turtle(Float64)
     @test t64 isa VT.Turtle{Float64,Nothing}
     @test VT.pos(t64) isa VG.Vec{Float64}
-    @test VT.geoms(t64) isa VG.Mesh{VG.Vec{Float64}}
+    @test VG.Mesh(t64) isa VG.Mesh{Float64}
 
     t32 = VT.Turtle(Float32)
     @test t32 isa VT.Turtle{Float32,Nothing}
     @test VT.pos(t32) isa VG.Vec{Float32}
-    @test VT.geoms(t32) isa VG.Mesh{VG.Vec{Float32}}
+    @test VG.Mesh(t32) isa VG.Mesh{Float32}
 
 
     # Head -> Z axis
