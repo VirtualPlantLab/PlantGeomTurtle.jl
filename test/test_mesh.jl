@@ -9,10 +9,10 @@ let
     e = VG.Ellipse(length = 2.0, width = 2.0, n = n)
     VG.update_normals!(e)
     t = VT.Turtle(Float64)
-    Mesh!(t, e, transform = false, move = false, deepcopy = true)
+    VT.Mesh!(t, e, transform = false, move = false, deepcopy = true)
     @test VG.Mesh(t) == e
 
-    e2 = Mesh(t, VG.Ellipse(n = n ), scale = VG.Vec(1.0, 2.0, 2.0))
+    e2 = VG.Mesh(t, VG.Ellipse(n = n ), scale = VG.Vec(1.0, 2.0, 2.0))
     @test e2 == e
 
 end
