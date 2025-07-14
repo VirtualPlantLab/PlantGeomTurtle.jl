@@ -1144,7 +1144,7 @@ function Mesh!(turtle::Turtle{FT,UT}, m::PGP.Mesh; scale::PGP.Vec{FT} = PGP.Vec{
     append!(PGP.vertices(PGP.Mesh(turtle)), PGP.vertices(mnew))
     # Make sure to also add the normals
     PGP.update_normals!(mnew)
-    PGP.add_property!(PGP.Mesh(turtle), :normal, PGP.normals(mnew))
+    PGP.add_property!(PGP.Mesh(turtle), :normals, PGP.normals(mnew))
     move && f!(turtle, length)
     # Set properties per triangle
     for (k, v) in kwargs
