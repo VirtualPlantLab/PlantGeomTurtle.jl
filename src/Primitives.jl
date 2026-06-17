@@ -1064,16 +1064,87 @@ function PGP.SolidFrustum(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT
 end
 
 
-function Ellipsoid!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
-                    height::FT = one(FT), n::Int = 20, move = false, kwargs...) where {FT,UT}
-    @error "Ellipsoid not implemented yet"
+"""
+    Ellipsoid!(turtle; length = 1.0, width = 1.0, height = 1.0, n = 20, move = false, kwargs...)
+
+Generate a solid ellipsoid in front of the turtle and feed it to a turtle.
+
+## Arguments
+- `turtle`: The turtle that we feed the solid ellipsoid to.
+- `length`: Length of the solid ellipsoid along the head axis.
+- `width`: Width of the solid ellipsoid along the arm axis.
+- `height`: Height of the solid ellipsoid along the up axis.
+- `n`: Number of latitude and azimuth subdivisions. The mesh has `2n(n-1)` triangles.
+- `move`: Whether to move the turtle forward or not (`true` or `false`).
+- `kwargs`: Properties to be set per triangle in the mesh.
+
+## Details
+A mesh will be generated with `2n(n-1)` triangles that approximate the solid ellipsoid.
+The ellipsoid will be generated in front of the turtle, with the base centered at the
+turtle's current position. The `length` argument refers to the axis aligned with the head
+axis of the turtle, whereas `width` refers to the arm axis and `height` to the up axis.
+
+When `move = true`, the turtle will be moved forward by a distance equal to `length`.
+
+## Return
+Returns `nothing` but modifies the `turtle` as a side effect.
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> e = Ellipsoid!(turtle; length = 1.0, width = 0.5, height = 0.5, n = 20);
+```
+"""
+function PGP.Ellipsoid!(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+                        height::FT = one(FT), n::Int = 20, move = false, kwargs...) where {FT,UT}
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length / FT(2)))
+    PGP.Ellipsoid!(PGP.Mesh(turtle), trans; n = n)
+    ntri = 2n * (n - 1)
+    for (k, v) in kwargs
+        PGP.add_property!(PGP.Mesh(turtle), k, v, ntri)
+    end
+    move && f!(turtle, length)
     return nothing
 end
 
-function Ellipsoid(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
-                   height::FT = one(FT), n::Int = 20, move = false) where {FT,UT}
-    @error "Ellipsoid not implemented yet"
-    return nothing
+"""
+    Ellipsoid(turtle; length = 1.0, width = 1.0, height = 1.0, n = 20, move = false)
+
+Generate a solid ellipsoid in front of the turtle and return it.
+
+## Arguments
+- `turtle`: The turtle which state is used to create the solid ellipsoid.
+- `length`: Length of the solid ellipsoid along the head axis.
+- `width`: Width of the solid ellipsoid along the arm axis.
+- `height`: Height of the solid ellipsoid along the up axis.
+- `n`: Number of latitude and azimuth subdivisions. The mesh has `2n(n-1)` triangles.
+- `move`: Whether to move the turtle forward or not (`true` or `false`).
+
+## Details
+A mesh will be generated with `2n(n-1)` triangles that approximate the solid ellipsoid.
+The ellipsoid will be generated in front of the turtle, with the base centered at the
+turtle's current position. The `length` argument refers to the axis aligned with the head
+axis of the turtle, whereas `width` refers to the arm axis and `height` to the up axis.
+
+When `move = true`, the turtle will be moved forward by a distance equal to `length`.
+
+## Return
+Returns a triangular mesh (object of type `Mesh`).
+
+## Examples
+```jldoctest
+julia> turtle = Turtle();
+
+julia> e = Ellipsoid(turtle; length = 1.0, width = 0.5, height = 0.5, n = 20);
+```
+"""
+function PGP.Ellipsoid(turtle::Turtle{FT,UT}; length::FT = one(FT), width::FT = one(FT),
+                       height::FT = one(FT), n::Int = 20, move = false) where {FT,UT}
+    trans = transformation(turtle, PGP.Vec(height / FT(2), width / FT(2), length / FT(2)))
+    e = PGP.Ellipsoid(trans; n = n)
+    move && f!(turtle, length)
+    return e
 end
 
 

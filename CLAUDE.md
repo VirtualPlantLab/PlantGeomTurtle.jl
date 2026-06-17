@@ -8,6 +8,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   quite high. This *requires* that you use the MCP server to avoid starting a
   new Julia session each time.
 
+- Run tests by using the MCP server and `include(test/runtests.jl)` rather than `Pkg.test()`. This will
+avoid lengthy recompilation and will work even if you iterate changes on the package due to
+`Revise`.
+
 - Exploit Julia packages and macros for evaluating performance issues:
   `BenchmarkTools.jl` for micro-benchmarks, `Profile` for CPU profiling, and
   `Cthulhu.jl` for method analysis (or `@code_warntype`). These tools are in

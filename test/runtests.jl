@@ -68,6 +68,9 @@ end
 @testset "solid_cone" begin
     include("test_solid_cone.jl")
 end
+@testset "ellipsoid" begin
+    include("test_ellipsoid.jl")
+end
 @testset "mesh" begin
     include("test_mesh.jl")
 end
