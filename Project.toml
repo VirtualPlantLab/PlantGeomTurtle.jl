@@ -1,7 +1,7 @@
 name = "PlantGeomTurtle"
 uuid = "7d6e2781-1c99-4c66-97ec-106669f3e96e"
 authors = ["Alejandro Morales Sierra <alejandro.moralessierra@wur.nl> and contributors"]
-version = "1.0.2"
+version = "1.0.1"
 
 [deps]
 CoordinateTransformations = "150eb455-5306-5404-9cee-2592286d6298"
